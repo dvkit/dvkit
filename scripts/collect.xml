@@ -1,0 +1,107 @@
+<project name="collect">
+	<property name="mirror_ftp" value="ftp://ftp.osuosl.org/pub/eclipse"/>
+	
+	<property name="packages_dir" value="${basedir}/../packages"/>
+	<property name="force" value="false"/>
+	
+	<property name="eclipse_release" value="${mirror_ftp}/eclipse/downloads/drops4/S-4.3RC4-201306052000"/>
+	<property name="eclipse_linux_tgz" value="eclipse-SDK-4.3RC4-linux-gtk.tar.gz"/>
+	<property name="eclipse_linux_x86_64_tgz" value="eclipse-SDK-4.3RC4-linux-gtk-x86_64.tar.gz"/>
+
+	<property name="cdt_zip" value="cdt-master-8.1.2.zip"/>
+	<property name="cdt_release" value="tools/cdt/releases/juno/sr2"/>
+
+	<property name="dltk_release" value="technology/dltk/downloads/drops/R4.0/R-4.0-201206120903"/>
+	<property name="dltk_zip" value="dltk-R-4.0-201206120903.zip"/>
+	
+	<property name="vrapper_release" value="http://sourceforge.net/projects/vrapper/files/vrapper/0.32.0/http://sourceforge.net/projects/vrapper/files/vrapper/0.32.0/vrapper_0.32.0_20130602.zip/download"/>
+	<property name="vrapper_zip" value="vrapper_0.32.0_20130602.zip"/>
+	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: name                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="collect" depends="init,collect_cdt,collect_dltk,collect_vrapper">
+            
+    </target>
+	
+	<target name="init">
+		<mkdir dir="${packages_dir}"/>
+	</target>
+	
+	<!-- Eclipse SDK -->
+	<condition property="fetch.eclipse.linux">
+		<or>
+			<not>
+				<available file="${packages_dir}/${eclipse_linux_tgz}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<!-- Eclipse Delta Pack -->
+
+
+	<!-- CDT -->
+	<condition property="fetch.cdt">
+		<or>
+			<not>
+				<available file="${packages_dir}/${cdt_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<target name="collect_cdt" if="${fetch.cdt}">
+		<delete file="${packages_dir}/${cdt_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="${mirror_ftp}/${cdt_release}/${cdt_zip}"/>
+		</exec>
+	</target>
+	
+	<!-- DLTK -->
+	<condition property="fetch.dltk">
+		<or>
+			<not>
+				<available file="${packages_dir}/${dltk_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<target name="collect_dltk" if="${fetch.dltk}">
+		<delete file="${packages_dir}/${dltk_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="${mirror_ftp}/${dltk_release}/${dltk_zip}"/>
+		</exec>
+	</target>
+
+	<!-- Vrapper -->
+	<condition property="fetch.vrapper">
+		<or>
+			<not>
+				<available file="${packages_dir}/${vrapper_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<target name="collect_vrapper" if="${fetch.vrapper}">
+		<delete file="${packages_dir}/${vrapper_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="-O"/>
+			<arg value="${vrapper_zip}"/>
+			<arg value="${vrapper_release}"/>
+		</exec>
+	</target>
+	
+</project>

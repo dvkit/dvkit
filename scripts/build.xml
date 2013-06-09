@@ -1,0 +1,10 @@
+<project name="build_dvk" default="mk_dvk">
+
+	<target name="mk_dvk" depends="collect">
+		
+	</target>
+	
+	<target name="collect">
+		<ant antfile="${basedir}/collect.xml" target="collect"/>
+	</target>
+</project>

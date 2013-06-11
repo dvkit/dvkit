@@ -1,10 +1,18 @@
 <project name="build_dvk" default="mk_dvk">
+	
+	<property name="feature.version" value="1.0.0"/>
+	<property name="dvk_version" value="1.0.0"/>
 
-	<target name="mk_dvk" depends="collect">
-		
+	<target name="build_dvk" depends="collect,mk_dvk">
+		<ant antfile="${basedir}/mk_dvk.xml" target="mk_dvk"/>
 	</target>
 	
 	<target name="collect">
 		<ant antfile="${basedir}/collect.xml" target="collect"/>
 	</target>
+	
+	<target name="mk_dvk">
+		<ant antfile="${basedir}/mk_dvk.xml" target="mk_dvk"/>
+	</target>
+	
 </project>

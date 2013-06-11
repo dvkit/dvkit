@@ -1,0 +1,251 @@
+<project name="mk_dvk">
+
+	
+	<property environment="env"/>
+	<property name="eclipse.home" location="${env.ECLIPSE_HOME}"/>
+	<condition property="eclipsec" 
+		value="${env.ECLIPSE_HOME}/eclipsec" 
+		else="${env.ECLIPSE_HOME}/eclipse">
+		<os family="windows"/>
+	</condition>
+	
+	<property file="${basedir}/mk_dvk.properties"/>
+	<property file="${basedir}/mk_dvk_${os}.properties"/>
+
+	<condition property="is_win">
+		<os family="windows"/>
+	</condition>
+
+	<condition property="build_ws" value="win32" else="gtk">
+		<os family="windows"/>
+	</condition>
+	<condition property="build_arch" value="x86_64" else="x86">
+		<os arch="amd64"/>
+	</condition>		
+
+	<property name="dvk_srcdir" value="${basedir}/../dvkit"/>
+	
+	<property name="buildRoot" location="${basedir}/../buildRoot"/>
+	<property name="buildRun" location="${buildRoot}/buildRun"/>
+	<property name="build" location="${buildRoot}/build"/>
+	<property name="buildResult" location="${basedir}/../buildResult"/>
+	
+	<target name="mk_dvk" depends="mk_dvk-pre">
+		<!--
+		<delete dir="${buildRoot}"/> 
+		<mkdir dir="${buildRoot}"/> 
+		  -->
+		<mkdir dir="${buildRun}"/> 
+		<mkdir dir="${build}"/> 
+		<property name="baseLocation" value="${eclipse.home}"/>
+		
+		<copy todir="${build}">
+			<fileset dir="${dvk_srcdir}">
+				<include name="plugins/**"/>
+				<include name="features/**"/>
+				<exclude name="**/*.svn/**"/>
+				<exclude name="**/*.git/**"/>
+			</fileset>
+		</copy>
+		<copy todir="${build}" overwrite="true">
+			<fileset dir="${dvk_srcdir}">
+				<include name="features/**/*.xml"/>
+				<include name="features/**/*.product"/>
+				<include name="plugins/**/*.xml"/>
+				<include name="plugins/**/*.MF"/>
+				<include name="plugins/**/*.properties"/>
+			</fileset>
+			<filterset begintoken="1" endtoken="3">
+				<filter token=".2." value="${feature.version}"/>
+			</filterset>
+		</copy>
+		
+		<!--
+		<unzip dest="${sveditor}/eclipse">
+			<fileset dir="${buildResult}">
+				<include name="sveditor-feature-${feature.version}.zip"/>
+			</fileset>
+		</unzip> 
+		  -->
+		
+		<copy file="${basedir}/mk_dvk_1.xml" todir="${buildRun}"/>
+		<ant antfile="${buildRun}/mk_dvk_1.xml" dir="${buildRun}"/>
+
+		<copy todir="${buildResult}">
+			<fileset dir="${build}/I.dvk">
+				<include name="*.zip"/>
+			</fileset>
+		</copy>
+
+		<antcall target="win_zip"/>
+		<antcall target="linux_zip"/>
+
+		<delete dir="${buildRoot}"/>		
+	</target>
+	
+	<target name="mk_dvk-pre">
+		<delete dir="${buildRoot}"/>
+		
+		<mkdir dir="${buildRoot}/cdt"/>
+		<unzip dest="${buildRoot}/cdt">
+			<fileset dir="${basedir}/../packages">
+				<include name="cdt-master-8.1.2.zip"/>
+			</fileset>
+		</unzip>
+		
+		<mkdir dir="${buildRoot}/dltk"/>
+		<unzip dest="${buildRoot}/dltk">
+			<fileset dir="${basedir}/../packages">
+				<include name="dltk-R-4.0-201206120903.zip"/>
+			</fileset>
+		</unzip>
+		
+		<mkdir dir="${buildRoot}/vrapper"/>
+		<unzip dest="${buildRoot}/vrapper">
+			<fileset dir="${basedir}/../packages">
+				<include name="vrapper_0.32.0_20130602.zip"/>
+			</fileset>
+		</unzip>
+		
+		<mkdir dir="${buildRoot}/emf"/>
+		<unzip dest="${buildRoot}/emf">
+			<fileset dir="${basedir}/../packages">
+				<include name="emf-xsd-Update-2.8.3.zip"/>
+			</fileset>
+		</unzip>
+	</target>
+	
+	<target name="win_zip" if="is_win">
+		<antcall target="install_addins">
+			<param name="c_os" value="win32"/>
+			<param name="c_ws" value="win32"/>
+			<param name="c_arch" value="x86"/>
+		</antcall>
+
+		<antcall target="install_addins">
+			<param name="c_os" value="win32"/>
+			<param name="c_ws" value="win32"/>
+			<param name="c_arch" value="x86_64"/>
+		</antcall>
+	</target>
+
+	<target name="linux_zip" unless="is_win">
+		<antcall target="install_addins">
+			<param name="c_os" value="linux"/>
+			<param name="c_ws" value="gtk"/>
+			<param name="c_arch" value="x86_64"/>
+		</antcall>
+
+		<antcall target="install_addins">
+			<param name="c_os" value="linux"/>
+			<param name="c_ws" value="gtk"/>
+			<param name="c_arch" value="x86"/>
+		</antcall>
+	</target>	
+
+	<macrodef name="install">
+		<attribute name="installIU"/>
+		<attribute name="repository"/>
+		<attribute name="tag"/>
+	
+		<sequential>
+		<exec executable="${eclipsec}" failonerror="true">
+			<arg value="-console"/>
+			<arg value="-consoleLog"/>
+			<arg value="-nosplash"/>
+			<arg value="-application"/>
+			<arg value="org.eclipse.equinox.p2.director"/>
+			<arg value="-installIU"/>
+			<arg value="@{installIU}"/>
+			<arg value="-repository"/>
+			<arg value="@{repository}"/>
+			<arg value="-tag"/>
+			<arg value="@{tag}"/>
+			<arg value="-destination"/>
+			<arg value="${buildResult}/dvk-${dvk_version}"/>
+		</exec>
+		</sequential>
+	</macrodef>
+	
+	<target name="install_addins">
+		<delete dir="${buildResult}/dvk-${dvk_version}"/>
+		<unzip dest="${buildResult}" 
+                    src="${buildResult}/dvk-${c_os}.${c_ws}.${c_arch}.zip"/>
+		<!--
+		<unzip dest="${buildResult}/dvk" 
+                    src="${buildResult}/dv-${feature.version}.jar"/>
+          -->
+		
+		<install installIU="org.eclipse.cdt.feature.group"
+			tag="AddCDT"
+			repository="file://${basedir}/../buildRoot/cdt"/>
+		
+		<install installIU="org.eclipse.emf.ecore.feature.group,org.eclipse.emf.databinding.feature.group"
+			tag="AddEMF"
+			repository="file://${basedir}/../buildRoot/emf"/>
+		
+		<install installIU="org.eclipse.dltk.tcl.feature.group"
+			tag="AddTCL"
+			repository="file://${basedir}/../buildRoot/dltk"/>
+		
+		<install installIU="net.sourceforge.vrapper.feature.group,net.sourceforge.vrapper.eclipse.cdt.feature.feature.group,net.sourceforge.vrapper.plugin.ipmotion.feature.group,net.sourceforge.vrapper.plugin.surround.feature.group"
+			tag="AddVrapper"
+			repository="file://${basedir}/../buildRoot/vrapper"/>
+
+		<!--
+		<exec executable="${eclipsec}" failonerror="true">
+			<arg value="-console"/>
+			<arg value="-consoleLog"/>
+			<arg value="-nosplash"/>
+			<arg value="-application"/>
+			<arg value="org.eclipse.equinox.p2.director"/>
+			<arg value="-installIU"/>
+			<arg value="org.eclipse.equinox.p2.discovery.feature.feature.group"/>
+			<arg value="-repository"/>
+			<arg value="file://${equinox_repository}"/>
+			<arg value="-tag"/>
+			<arg value="AddSVE"/>
+			<arg value="-destination"/>
+			<arg value="${buildResult}/sve-${sve_version}"/>
+		</exec>
+		<exec executable="${eclipsec}" failonerror="true">
+			<arg value="-console"/>
+			<arg value="-consoleLog"/>
+			<arg value="-nosplash"/>
+			<arg value="-application"/>
+			<arg value="org.eclipse.equinox.p2.director"/>
+			<arg value="-installIU"/>
+			<arg value="org.eclipse.epp.mpc.feature.group"/>
+			<arg value="-repository"/>
+			<arg value="file://${mpc_repository}"/>
+			<arg value="-tag"/>
+			<arg value="AddSVE"/>
+			<arg value="-destination"/>
+			<arg value="${buildResult}/sve-${sve_version}"/>
+		</exec>
+		  -->
+		<delete file="${buildResult}/dvk-${c_os}.${c_ws}.${c_arch}.zip"/>
+		<antcall target="tar_unix"/>
+		<antcall target="zip_windows"/>
+		<delete dir="${buildResult}/dvk-${dvk_version}"/>
+	</target>
+
+	<target name="tar_unix" unless="is_win">
+		<exec executable="chmod" dir="${buildResult}/dvk-${dvk_version}">
+			<arg value="+x"/>
+			<arg value="dvk"/>
+		</exec>
+		<exec executable="tar" dir="${buildResult}" failonerror="true">
+			<arg value="czf"/>
+			<arg value="dvk-${dvk_version}-${c_os}_${c_arch}.tar.gz"/>
+			<arg value="dvk-${dvk_version}"/>
+		</exec>
+	</target>
+
+	<target name="zip_windows" if="is_win">
+		<zip destfile="${buildResult}/dvk-${sve_version}-${c_os}_${c_arch}.zip"
+			basedir="${buildResult}" includes="dvk-${dvk_version}/**">
+		</zip>
+	</target>
+	
+</project>

@@ -7,21 +7,30 @@
 	<property name="eclipse_release" value="${mirror_ftp}/eclipse/downloads/drops4/S-4.3RC4-201306052000"/>
 	<property name="eclipse_linux_tgz" value="eclipse-SDK-4.3RC4-linux-gtk.tar.gz"/>
 	<property name="eclipse_linux_x86_64_tgz" value="eclipse-SDK-4.3RC4-linux-gtk-x86_64.tar.gz"/>
+	<property name="eclipse_delta_pack_zip" value="eclipse-4.3RC4-delta-pack.zip"/>
 
 	<property name="cdt_zip" value="cdt-master-8.1.2.zip"/>
 	<property name="cdt_release" value="tools/cdt/releases/juno/sr2"/>
 
+	<property name="emf_release" value="modeling/emf/emf/downloads/drops/2.8.3/R201301250826"/>
+	<property name="emf_zip" value="emf-xsd-Update-2.8.3.zip"/>
+	
 	<property name="dltk_release" value="technology/dltk/downloads/drops/R4.0/R-4.0-201206120903"/>
 	<property name="dltk_zip" value="dltk-R-4.0-201206120903.zip"/>
 	
-	<property name="vrapper_release" value="http://sourceforge.net/projects/vrapper/files/vrapper/0.32.0/http://sourceforge.net/projects/vrapper/files/vrapper/0.32.0/vrapper_0.32.0_20130602.zip/download"/>
+	<property name="zest_release" value="tools/gef/downloads/drops/3.8.2/R201301141834"/>
+	<property name="zest_zip" value="GEF-zest-3.8.2.zip"/>
+
+	
+	<property name="vrapper_release" value="http://sourceforge.net/projects/vrapper/files/vrapper/0.32.0/vrapper_0.32.0_20130602.zip/download"/>
 	<property name="vrapper_zip" value="vrapper_0.32.0_20130602.zip"/>
 	
 	
 	<!-- - - - - - - - - - - - - - - - - - 
           target: name                      
          - - - - - - - - - - - - - - - - - -->
-    <target name="collect" depends="init,collect_cdt,collect_dltk,collect_vrapper">
+    <target name="collect" 
+    	depends="init,collect_eclipse,collect_cdt,collect_emf,collect_dltk,collect_zest,collect_vrapper">
             
     </target>
 	
@@ -30,17 +39,76 @@
 	</target>
 	
 	<!-- Eclipse SDK -->
+	<target name="collect_eclipse" 
+		depends="collect_eclipse_linux,collect_eclipse_linux_x86_64,collect_eclipse_deltapack"/>
+	
 	<condition property="fetch.eclipse.linux">
+		<and>
+			<or>
+				<not>
+					<available file="${packages_dir}/${eclipse_linux_tgz}"/>
+				</not>
+				<equals arg1="${force}" arg2="true"/>
+			</or>
+			<os name="linux"/>
+			<not>
+				<os arch="amd64"/>
+			</not>
+		</and>
+	</condition>
+	
+	<target name="collect_eclipse_linux" if="${fetch.eclipse.linux}">
+		<delete file="${packages_dir}/${eclipse_linux_tgz}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="${eclipse_release}/${eclipse_linux_tgz}"/>
+		</exec>
+	</target>	
+
+	<condition property="fetch.eclipse.linux_x86_64">
+		<and>
+			<or>
+				<not>
+					<available file="${packages_dir}/${eclipse_linux_x86_64_tgz}"/>
+				</not>
+				<equals arg1="${force}" arg2="true"/>
+			</or>
+			<os name="linux"/>
+			<os arch="amd64"/>
+		</and>
+	</condition>
+	
+	<target name="collect_eclipse_linux_x86_64" if="${fetch.eclipse.linux_x86_64}">
+		<delete file="${packages_dir}/${eclipse_linux_x86_64_tgz}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="${eclipse_release}/${eclipse_linux_x86_64_tgz}"/>
+		</exec>
+	</target>
+	
+	<!-- Eclipse Delta Pack -->
+	<condition property="fetch.eclipse.deltapack">
 		<or>
 			<not>
-				<available file="${packages_dir}/${eclipse_linux_tgz}"/>
+				<available file="${packages_dir}/${eclipse_delta_pack_zip}"/>
 			</not>
 			<equals arg1="${force}" arg2="true"/>
 		</or>
 	</condition>
 	
-	<!-- Eclipse Delta Pack -->
-
+	<target name="collect_eclipse_deltapack" if="${fetch.eclipse.deltapack}">
+		<delete file="${packages_dir}/${eclipse_delta_pack_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="${eclipse_release}/${eclipse_delta_pack_zip}"/>
+		</exec>
+	</target>
 
 	<!-- CDT -->
 	<condition property="fetch.cdt">
@@ -61,7 +129,26 @@
 			<arg value="${mirror_ftp}/${cdt_release}/${cdt_zip}"/>
 		</exec>
 	</target>
+
+	<condition property="fetch.emf">
+		<or>
+			<not>
+				<available file="${packages_dir}/${emf_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
 	
+	<target name="collect_emf" if="${fetch.emf}">
+		<delete file="${packages_dir}/${emf_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="${mirror_ftp}/${emf_release}/${emf_zip}"/>
+		</exec>
+	</target>
+			
 	<!-- DLTK -->
 	<condition property="fetch.dltk">
 		<or>
@@ -79,6 +166,25 @@
 			dir="${packages_dir}">
 			<arg value="-nv"/>
 			<arg value="${mirror_ftp}/${dltk_release}/${dltk_zip}"/>
+		</exec>
+	</target>
+	
+	<!-- GEF Zest+Draw2d -->
+	<condition property="fetch.zest">
+		<or>
+			<not>
+				<available file="${packages_dir}/${zest_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+		
+	<target name="collect_zest" if="${fetch.zest}">
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="${mirror_ftp}/${zest_release}/${zest_zip}"/>
 		</exec>
 	</target>
 

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DVKit Product
-Bundle-SymbolicName: net.sf.dvkit.product
+Bundle-SymbolicName: net.sf.dvkit.product;singleton:=true
 Bundle-Version: 1.2.3
 Bundle-Activator: net.sf.dvkit.product.Activator
 Require-Bundle: org.eclipse.ui,

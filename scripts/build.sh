@@ -17,10 +17,29 @@ while test -n "$1"; do
   shift
 done
 
-$ECLIPSE_HOME/eclipse \
+. ./packages.properties
+
+rm -rf ../buildRoot
+mkdir ../buildRoot
+
+arch=`uname -m`
+pwd=`pwd`
+
+cd ../buildRoot
+
+if test $arch = "x86_64"; then
+  tar xvzf ../packages/${eclipse_linux_x86_64_tgz}
+else
+  tar xvzf ../packages/${eclipse_linux_tgz}
+fi
+
+cd $pwd
+
+../buildRoot/eclipse/eclipse \
     -nosplash -application org.eclipse.ant.core.antRunner \
     --launcher.suppressErrors \
     -buildfile build.xml      \
-    -verbose \
-    -Dos=linux -Dws=gtk -Darch=x86_64 $extra_defs build_dvk
+    -data ../buildRoot/ws     \
+    -verbose                  \
+    -Dos=linux -Dws=gtk -Darch=$arch $extra_defs build_dvk
 

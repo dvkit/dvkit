@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product id="net.sf.dvkit.product.dvkit" application="org.eclipse.ui.ide.workbench" version="1.2.3" useFeatures="true" includeLaunchers="true">
-
+<product name="net.sf.dvkit" id="net.sf.dvkit.product.dvkit" application="org.eclipse.ui.ide.workbench" version="1.2.3" useFeatures="true" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -13,7 +12,6 @@
 
    <windowImages/>
 
-
    <launcher name="dvk">
       <solaris/>
       <win useIco="false">
@@ -21,12 +19,10 @@
       </win>
    </launcher>
 
-
    <vm>
       <linux include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</linux>
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6</windows>
    </vm>
-
 
    <plugins>
    </plugins>
@@ -34,6 +30,15 @@
    <features>
       <feature id="net.sf.dvkit.feature" version="1.2.3"/>
       <feature id="org.eclipse.platform"/>
+      <feature id="org.eclipse.e4.rcp"/>
+      <feature id="org.eclipse.help"/>
+      <feature id="org.eclipse.emf.ecore"/>
+      <feature id="org.eclipse.equinox.p2.core.feature"/>
+      <feature id="org.eclipse.emf.common"/>
+      <feature id="org.eclipse.equinox.p2.rcp.feature"/>
+      <feature id="org.eclipse.equinox.p2.user.ui"/>
+      <feature id="org.eclipse.rcp"/>
+      <feature id="org.eclipse.equinox.p2.extras.feature"/>
    </features>
 
 

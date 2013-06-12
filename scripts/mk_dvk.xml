@@ -2,12 +2,8 @@
 
 	
 	<property environment="env"/>
-	<property name="eclipse.home" location="${env.ECLIPSE_HOME}"/>
-	<condition property="eclipsec" 
-		value="${env.ECLIPSE_HOME}/eclipsec" 
-		else="${env.ECLIPSE_HOME}/eclipse">
-		<os family="windows"/>
-	</condition>
+	<property file="${basedir}/packages.properties"/>
+	
 	
 	<property file="${basedir}/mk_dvk.properties"/>
 	<property file="${basedir}/mk_dvk_${os}.properties"/>
@@ -30,14 +26,26 @@
 	<property name="build" location="${buildRoot}/build"/>
 	<property name="buildResult" location="${basedir}/../buildResult"/>
 	
+	<property name="eclipse.home" location="${buildRoot}/eclipse"/>
+	<condition property="eclipsec" 
+		value="${eclipse.home}/eclipsec" 
+		else="${eclipse.home}/eclipse">
+		<os family="windows"/>
+	</condition>
+
+	<condition property="eclipse_tgz"
+		value="${eclipse_linux_x86_64_tgz}"
+		else="${eclipse_linux_tgz}">
+		<os arch="amd64"/>
+	</condition>
+	
 	<target name="mk_dvk" depends="mk_dvk-pre">
-		<!--
-		<delete dir="${buildRoot}"/> 
-		<mkdir dir="${buildRoot}"/> 
-		  -->
+		<delete dir="${buildRun}"/> 
 		<mkdir dir="${buildRun}"/> 
+		<delete dir="${build}"/> 
 		<mkdir dir="${build}"/> 
 		<property name="baseLocation" value="${eclipse.home}"/>
+		
 		
 		<copy todir="${build}">
 			<fileset dir="${dvk_srcdir}">
@@ -79,41 +87,81 @@
 
 		<antcall target="win_zip"/>
 		<antcall target="linux_zip"/>
-
-		<delete dir="${buildRoot}"/>		
 	</target>
 	
 	<target name="mk_dvk-pre">
+		<!--
 		<delete dir="${buildRoot}"/>
+		  -->
+		<mkdir dir="${buildRoot}"/>
+	
+		<!--
+		<antcall target="linux_unpack_eclipse"/>
+		<antcall target="windows_unpack_eclipse"/>
+		  -->
+		
+		<mkdir dir="${buildRoot}/zest"/>
+		<unzip dest="${buildRoot}/zest">
+			<fileset dir="${basedir}/../packages">
+				<include name="${zest_zip}"/>
+			</fileset>
+		</unzip>
 		
 		<mkdir dir="${buildRoot}/cdt"/>
 		<unzip dest="${buildRoot}/cdt">
 			<fileset dir="${basedir}/../packages">
-				<include name="cdt-master-8.1.2.zip"/>
+				<include name="${cdt_zip}"/>
 			</fileset>
 		</unzip>
 		
 		<mkdir dir="${buildRoot}/dltk"/>
 		<unzip dest="${buildRoot}/dltk">
 			<fileset dir="${basedir}/../packages">
-				<include name="dltk-R-4.0-201206120903.zip"/>
+				<include name="${dltk_zip}"/>
 			</fileset>
 		</unzip>
 		
 		<mkdir dir="${buildRoot}/vrapper"/>
 		<unzip dest="${buildRoot}/vrapper">
 			<fileset dir="${basedir}/../packages">
-				<include name="vrapper_0.32.0_20130602.zip"/>
+				<include name="${vrapper_zip}"/>
+			</fileset>
+		</unzip>
+		
+		<mkdir dir="${buildRoot}/sveditor"/>
+		<unzip dest="${buildRoot}/sveditor">
+			<fileset dir="${basedir}/../packages">
+				<include name="${sveditor_zip}"/>
 			</fileset>
 		</unzip>
 		
 		<mkdir dir="${buildRoot}/emf"/>
 		<unzip dest="${buildRoot}/emf">
 			<fileset dir="${basedir}/../packages">
-				<include name="emf-xsd-Update-2.8.3.zip"/>
+				<include name="${emf_zip}"/>
 			</fileset>
 		</unzip>
+		
+		<mkdir dir="${buildRoot}/deltapack"/>
+		<unzip dest="${buildRoot}/deltapack">
+			<fileset dir="${basedir}/../packages">
+				<include name="${eclipse_delta_pack_zip}"/>
+			</fileset>
+		</unzip>
+				
 	</target>
+
+	<!--
+	<target name="linux_unpack_eclipse" unless="${is_win}">
+		<exec executable="tar" dir="${buildRoot}" failonerror="true">
+			<arg value="xvf"/>
+			<arg value="${basedir}/../packages/${eclipse_tgz}"/>
+		</exec>
+	</target>
+	
+	<target name="windows_unpack_eclipse" if="${is_win}">
+	</target>
+	  -->
 	
 	<target name="win_zip" if="is_win">
 		<antcall target="install_addins">
@@ -171,16 +219,16 @@
 		<delete dir="${buildResult}/dvk-${dvk_version}"/>
 		<unzip dest="${buildResult}" 
                     src="${buildResult}/dvk-${c_os}.${c_ws}.${c_arch}.zip"/>
-		<!--
-		<unzip dest="${buildResult}/dvk" 
-                    src="${buildResult}/dv-${feature.version}.jar"/>
-          -->
+		
+		<install installIU="org.eclipse.draw2d.feature.group,org.eclipse.zest.feature.group"
+			tag="AddZEST"
+			repository="file://${basedir}/../buildRoot/zest"/>
 		
 		<install installIU="org.eclipse.cdt.feature.group"
 			tag="AddCDT"
 			repository="file://${basedir}/../buildRoot/cdt"/>
-		
-		<install installIU="org.eclipse.emf.ecore.feature.group,org.eclipse.emf.databinding.feature.group"
+	
+		<install installIU="org.eclipse.emf.databinding.feature.group"
 			tag="AddEMF"
 			repository="file://${basedir}/../buildRoot/emf"/>
 		
@@ -191,39 +239,11 @@
 		<install installIU="net.sourceforge.vrapper.feature.group,net.sourceforge.vrapper.eclipse.cdt.feature.feature.group,net.sourceforge.vrapper.plugin.ipmotion.feature.group,net.sourceforge.vrapper.plugin.surround.feature.group"
 			tag="AddVrapper"
 			repository="file://${basedir}/../buildRoot/vrapper"/>
+		
+		<install installIU="net.sf.sveditor.feature.group"
+			tag="AddSVEditor"
+			repository="file://${basedir}/../buildRoot/sveditor"/>
 
-		<!--
-		<exec executable="${eclipsec}" failonerror="true">
-			<arg value="-console"/>
-			<arg value="-consoleLog"/>
-			<arg value="-nosplash"/>
-			<arg value="-application"/>
-			<arg value="org.eclipse.equinox.p2.director"/>
-			<arg value="-installIU"/>
-			<arg value="org.eclipse.equinox.p2.discovery.feature.feature.group"/>
-			<arg value="-repository"/>
-			<arg value="file://${equinox_repository}"/>
-			<arg value="-tag"/>
-			<arg value="AddSVE"/>
-			<arg value="-destination"/>
-			<arg value="${buildResult}/sve-${sve_version}"/>
-		</exec>
-		<exec executable="${eclipsec}" failonerror="true">
-			<arg value="-console"/>
-			<arg value="-consoleLog"/>
-			<arg value="-nosplash"/>
-			<arg value="-application"/>
-			<arg value="org.eclipse.equinox.p2.director"/>
-			<arg value="-installIU"/>
-			<arg value="org.eclipse.epp.mpc.feature.group"/>
-			<arg value="-repository"/>
-			<arg value="file://${mpc_repository}"/>
-			<arg value="-tag"/>
-			<arg value="AddSVE"/>
-			<arg value="-destination"/>
-			<arg value="${buildResult}/sve-${sve_version}"/>
-		</exec>
-		  -->
 		<delete file="${buildResult}/dvk-${c_os}.${c_ws}.${c_arch}.zip"/>
 		<antcall target="tar_unix"/>
 		<antcall target="zip_windows"/>

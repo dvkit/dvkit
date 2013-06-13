@@ -10,7 +10,9 @@
           target: name                      
          - - - - - - - - - - - - - - - - - -->
     <target name="collect" 
-    	depends="init,collect_eclipse,collect_cdt,collect_emf,collect_dltk,collect_zest,collect_vrapper,collect_sveditor">
+    	depends="init,collect_eclipse,collect_cdt,
+    	collect_emf,collect_dltk,collect_zest,collect_vrapper,
+    	collect_sveditor,collect_elt">
             
     </target>
 	
@@ -209,6 +211,28 @@
 			<arg value="-O"/>
 			<arg value="${sveditor_zip}"/>
 			<arg value="${sveditor_release}"/>
+		</exec>
+	</target>
+
+	<!-- SVEditor -->
+	<condition property="fetch.elt">
+		<or>
+			<not>
+				<available file="${packages_dir}/${elt_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<target name="collect_elt" if="${fetch.elt}">
+		<delete file="${packages_dir}/${elt_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="-O"/>
+			<arg value="${elt_zip}"/>
+			<arg value="${elt_release}"/>
 		</exec>
 	</target>
 	

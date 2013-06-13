@@ -41,5 +41,5 @@ cd $pwd
     -buildfile build.xml      \
     -data ../buildRoot/ws     \
     -verbose                  \
-    -Dos=linux -Dws=gtk -Darch=$arch $extra_defs build_dvk
+    -Dos=linux -Dws=gtk -Darch=$arch $extra_defs build_dvkit
 

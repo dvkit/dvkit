@@ -3,7 +3,7 @@
   **
   ** Build script that is run inside buildRoot to produce the product
   -->
-<project name="mk_dvk_1" default="mk_product">
+<project name="mk_dvkit_1" default="mk_product">
 	
 	<property name="buildDirectory" value="${basedir}/../build"/>
 	

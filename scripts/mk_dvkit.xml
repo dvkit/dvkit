@@ -115,6 +115,20 @@
 			</fileset>
 		</unzip>
 		
+		<mkdir dir="${buildRoot}/jdt"/>
+		<unzip dest="${buildRoot}/jdt">
+			<fileset dir="${basedir}/../packages">
+				<include name="${jdt_zip}"/>
+			</fileset>
+		</unzip>
+
+		<mkdir dir="${buildRoot}/wst"/>
+		<unzip dest="${buildRoot}/wst">
+			<fileset dir="${basedir}/../packages">
+				<include name="${wst_zip}"/>
+			</fileset>
+		</unzip>
+		
 		<mkdir dir="${buildRoot}/dltk"/>
 		<unzip dest="${buildRoot}/dltk">
 			<fileset dir="${basedir}/../packages">
@@ -140,6 +154,20 @@
 		<unzip dest="${buildRoot}/elt">
 			<fileset dir="${basedir}/../packages">
 				<include name="${elt_zip}"/>
+			</fileset>
+		</unzip>
+				
+		<mkdir dir="${buildRoot}/linuxtools"/>
+		<unzip dest="${buildRoot}/linuxtools">
+			<fileset dir="${basedir}/../packages">
+				<include name="${linuxtools_zip}"/>
+			</fileset>
+		</unzip>
+					
+		<mkdir dir="${buildRoot}/shelled"/>
+		<unzip dest="${buildRoot}/shelled">
+			<fileset dir="${basedir}/../packages">
+				<include name="${shelled_zip}"/>
 			</fileset>
 		</unzip>
 		
@@ -228,7 +256,9 @@
 		<unzip dest="${buildResult}" 
                     src="${buildResult}/dvkit-${c_os}.${c_ws}.${c_arch}.zip"/>
 		
-		<install installIU="org.eclipse.draw2d.feature.group,org.eclipse.zest.feature.group"
+		<install installIU="org.eclipse.gef.feature.group,
+			org.eclipse.draw2d.feature.group,
+			org.eclipse.zest.feature.group"
 			tag="AddZEST"
 			repository="file://${basedir}/../buildRoot/zest"/>
 		
@@ -236,9 +266,29 @@
 			tag="AddCDT"
 			repository="file://${basedir}/../buildRoot/cdt"/>
 	
-		<install installIU="org.eclipse.emf.databinding.feature.group"
+		<!-- JDT is required by the JavaScript editor -->
+		<install installIU="org.eclipse.jdt.feature.group"
+			tag="AddJDT"
+			repository="file://${basedir}/../buildRoot/jdt"/>
+
+		<install installIU="org.eclipse.emf.databinding.feature.group,
+							org.eclipse.emf.edit.feature.group,
+							org.eclipse.xsd.edit.feature.group,
+							org.eclipse.emf.edit.ui.feature.group,
+							org.eclipse.emf.ecore.edit.feature.group"
 			tag="AddEMF"
 			repository="file://${basedir}/../buildRoot/emf"/>
+	
+		<!-- XML/JavaScript tools depend on:
+		  - JDT 
+		  - EMF
+		  -->
+		<install 
+                        installIU="org.eclipse.wst.xml_ui.feature.feature.group,
+                                   org.eclipse.wst.jsdt.feature.feature.group"
+			tag="AddWST"
+			repository="file://${basedir}/../buildRoot/wst"/>
+	
 		
 		<install installIU="org.eclipse.dltk.tcl.feature.group"
 			tag="AddTCL"
@@ -252,14 +302,33 @@
 			tag="AddSVEditor"
 			repository="file://${basedir}/../buildRoot/sveditor"/>
 		
-		<install installIU="com.google.eclipse.elt.feature.group"
-			tag="AddELT"
-			repository="file://${basedir}/../buildRoot/elt"/>
+		<antcall target="install_elt"/>
+				
+				<!--
+		<install installIU="org.eclipse.linuxtools.cdt.libhover.feature.feature.group,org.eclipse.linuxtools.man.feature.group"
+			tag="AddLinuxTools"
+			repository="file://${basedir}/../buildRoot/linuxtools/archive/releng/org.eclipse.linuxtools.releng-site/target/repository"/>
+			
+		<install installIU="org.eclipse.linuxtools.cdt.libhover.feature.feature.group,org.eclipse.linuxtools.man.feature.group"
+			tag="AddLinuxTools"
+			repository="file://${basedir}/../buildRoot/linuxtools/archive/releng/org.eclipse.linuxtools.releng-site/target/repository"/>
+			   -->
+
+		<install installIU="net.sourceforge.shelled.feature.group"
+			tag="AddShellEd"
+			repository="file://${basedir}/../buildRoot/shelled"/>
 
 		<delete file="${buildResult}/dvkit-${c_os}.${c_ws}.${c_arch}.zip"/>
 		<antcall target="tar_unix"/>
 		<antcall target="zip_windows"/>
 		<delete dir="${buildResult}/dvkit-${dvkit_version}"/>
+	</target>
+	
+	<!-- Currently, ELT is not supported on Windows -->
+	<target name="install_elt" unless="is_win">
+		<install installIU="com.google.eclipse.elt.feature.group"
+			tag="AddELT"
+			repository="file://${basedir}/../buildRoot/elt"/>
 	</target>
 
 	<target name="tar_unix" unless="is_win">
@@ -275,7 +344,7 @@
 	</target>
 
 	<target name="zip_windows" if="is_win">
-		<zip destfile="${buildResult}/dvkit-${sve_version}-${c_os}_${c_arch}.zip"
+		<zip destfile="${buildResult}/dvkit-${dvkit_version}-${c_os}_${c_arch}.zip"
 			basedir="${buildResult}" includes="dvkit-${dvkit_version}/**">
 		</zip>
 	</target>

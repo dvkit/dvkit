@@ -10,9 +10,10 @@
           target: name                      
          - - - - - - - - - - - - - - - - - -->
     <target name="collect" 
-    	depends="init,collect_eclipse,collect_cdt,
+    	depends="init,collect_eclipse,collect_cdt,collect_wst,
     	collect_emf,collect_dltk,collect_zest,collect_vrapper,
-    	collect_sveditor,collect_elt">
+    	collect_sveditor,collect_elt,collect_shelled,
+    	collect_linuxtools">
             
     </target>
 	
@@ -22,7 +23,9 @@
 	
 	<!-- Eclipse SDK -->
 	<target name="collect_eclipse" 
-		depends="collect_eclipse_linux,collect_eclipse_linux_x86_64,collect_eclipse_deltapack"/>
+		depends="collect_eclipse_linux,collect_eclipse_linux_x86_64,
+		collect_eclipse_win32,collect_eclipse_win32_x86_64,
+		collect_eclipse_deltapack,collect_jdt"/>
 	
 	<condition property="fetch.eclipse.linux">
 		<and>
@@ -72,6 +75,54 @@
 		</exec>
 	</target>
 	
+	<condition property="fetch.eclipse.win32">
+		<and>
+			<or>
+				<not>
+					<available file="${packages_dir}/${eclipse_win32_zip}"/>
+				</not>
+				<equals arg1="${force}" arg2="true"/>
+			</or>
+			<os name="windows"/>
+			<not>
+				<os arch="amd64"/>
+			</not>
+		</and>
+	</condition>
+	
+	<target name="collect_eclipse_win32" if="${fetch.eclipse.win32}">
+		<delete file="${packages_dir}/${eclipse_win32_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="${eclipse_release}/${eclipse_win32_zip}"/>
+		</exec>
+	</target>	
+	
+	<condition property="fetch.eclipse.win32_x86_64">
+		<and>
+			<or>
+				<not>
+					<available file="${packages_dir}/${eclipse_win32_x86_64_zip}"/>
+				</not>
+				<equals arg1="${force}" arg2="true"/>
+			</or>
+			<os name="windows"/>
+			<os arch="amd64"/>
+		</and>
+	</condition>
+	
+	<target name="collect_eclipse_win32_x86_64" if="${fetch.eclipse.win32_x86_64}">
+		<delete file="${packages_dir}/${eclipse_win32_x86_64_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="${eclipse_release}/${eclipse_win32_x86_64_zip}"/>
+		</exec>
+	</target>
+	
 	<!-- Eclipse Delta Pack -->
 	<condition property="fetch.eclipse.deltapack">
 		<or>
@@ -92,6 +143,26 @@
 		</exec>
 	</target>
 
+	<!-- Eclipse JDT -->
+	<condition property="fetch.eclipse.jdt">
+		<or>
+			<not>
+				<available file="${packages_dir}/${jdt_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<target name="collect_jdt" if="${fetch.eclipse.jdt}">
+		<delete file="${packages_dir}/${jdt_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="${mirror_ftp}/${jdt_release}/${jdt_zip}"/>
+		</exec>
+	</target>
+				
 	<!-- CDT -->
 	<condition property="fetch.cdt">
 		<or>
@@ -112,6 +183,26 @@
 		</exec>
 	</target>
 
+	<!-- CDT -->
+	<condition property="fetch.wst">
+		<or>
+			<not>
+				<available file="${packages_dir}/${wst_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<target name="collect_wst" if="${fetch.wst}">
+		<delete file="${packages_dir}/${wst_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="${mirror_ftp}/${wst_release}/${wst_zip}"/>
+		</exec>
+	</target>
+	
 	<condition property="fetch.emf">
 		<or>
 			<not>
@@ -214,7 +305,7 @@
 		</exec>
 	</target>
 
-	<!-- SVEditor -->
+	<!-- ELT -->
 	<condition property="fetch.elt">
 		<or>
 			<not>
@@ -233,6 +324,50 @@
 			<arg value="-O"/>
 			<arg value="${elt_zip}"/>
 			<arg value="${elt_release}"/>
+		</exec>
+	</target>
+
+	<!-- Shelled -->
+	<condition property="fetch.shelled">
+		<or>
+			<not>
+				<available file="${packages_dir}/${shelled_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<target name="collect_shelled" if="${fetch.shelled}">
+		<delete file="${packages_dir}/${shelled_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="-O"/>
+			<arg value="${shelled_zip}"/>
+			<arg value="${shelled_release}"/>
+		</exec>
+	</target>
+
+	<!-- linuxtools -->
+	<condition property="fetch.linuxtools">
+		<or>
+			<not>
+				<available file="${packages_dir}/${linuxtools_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<target name="collect_linuxtools" if="${fetch.linuxtools}">
+		<delete file="${packages_dir}/${linuxtools_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="-O"/>
+			<arg value="${linuxtools_zip}"/>
+			<arg value="${mirror_ftp}/${linuxtools_release}"/>
 		</exec>
 	</target>
 	

@@ -3,12 +3,11 @@
 
 <product name="net.sf.dvkit" id="net.sf.dvkit.product.dvkit" application="org.eclipse.ui.ide.workbench" version="1.2.3" useFeatures="true" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
    <launcherArgs>
-      <programArgs>-Xmx512m</programArgs>
+      <vmArgs>-Xmx512m</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
@@ -20,15 +19,19 @@
       startupMessageRect="7,252,445,20"
       startupForegroundColor="000000" />
    <launcher name="dvkit">
+      <linux icon="/net.sf.dvkit.feature/window_img_48_48.xpm"/>
       <solaris/>
       <win useIco="false">
-         <bmp/>
+         <bmp
+            winSmallHigh="/net.sf.dvkit.feature/window_img_16_16.bmp"
+            winMediumHigh="/net.sf.dvkit.feature/window_img_32_32.bmp"
+            winLargeHigh="/net.sf.dvkit.feature/window_img_48_48.bmp"
+            winExtraLargeHigh="/net.sf.dvkit.feature/window_img_256_256.bmp"/>
       </win>
    </launcher>
 
-
    <vm>
-      <linux include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</linux>
+      <linux include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JRE-1.1</linux>
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</windows>
    </vm>
 

@@ -1,0 +1,13 @@
+Source: dvkit
+Package: dvkit
+Version: 1.2.3
+Section: unknown
+Priority: extra
+Maintainer: Matthew Ballance <matt.ballance@gmail.com>
+Standards-Version: 3.9.2
+Homepage: http://dvkit.sourceforge.net
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
+Depends: openjdk-6-jre | openjdk-6-jdk | sun-java6-jdk | sun-java6-jre | java6-sdk | java6-runtime | default-jre | openjdk-7-jre | openjdk-7-jdk | sun-java7-jdk | sun-java7-jre | java7-sdk | java7-runtime
+Architecture: @arch@
+

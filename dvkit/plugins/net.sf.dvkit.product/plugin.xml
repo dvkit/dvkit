@@ -6,10 +6,10 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.ui.ide.workbench"
-            name="net.sf.dvkit">
+            name="DVKit">
          <property
                name="appName"
-               value="net.sf.dvkit">
+               value="DVKit">
          </property>
          <property
                name="cssTheme"
@@ -26,6 +26,14 @@
          <property
                name="preferenceCustomization"
                value="plugin_customization.ini">
+         </property>
+         <property
+               name="startupProgressRect"
+               value="0,280,455,15">
+         </property>
+         <property
+               name="startupMessageRect"
+               value="7,220,441,20">
          </property>
       </product>
    </extension>

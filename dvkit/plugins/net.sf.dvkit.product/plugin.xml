@@ -35,6 +35,18 @@
                name="startupMessageRect"
                value="7,220,441,20">
          </property>
+         <property
+               name="aboutImage"
+               value="product_lg.gif">
+         </property>
+         <property
+               name="aboutText"
+               value="DVKit Design Verification IDE">
+         </property>
+         <property
+               name="windowImages"
+               value="window_img_16_16.gif,window_img_32_32.gif,window_img_48_48.gif,window_img_64_64.gif,window_img_128_128.gif">
+         </property>
       </product>
    </extension>
    <extension

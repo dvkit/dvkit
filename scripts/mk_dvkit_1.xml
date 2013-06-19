@@ -8,17 +8,17 @@
 	<property name="buildDirectory" value="${basedir}/../build"/>
 	
 	<target name="mk_product">
-		<property name="baseLocation" value="${eclipse.home}"/>
 		
 		<!-- by default, check for deltapack co-located with eclipse -->
-		<property name="deltapack" value="${basedir}/../deltapack/eclipse"/>
+		<property name="deltapack" location="${buildRoot}/deltapack/eclipse"/>
 
 		<!-- Check that we have a deltapack -->
 		<available property="haveDeltaPack" file="${deltapack}"/>
-		<fail unless="haveDeltaPack" message="The deltapack is required to build this product.  Please edit buildProduct.xml or set the &quot;deltapack&quot; property." />
+		<fail unless="haveDeltaPack" 
+                      message="The deltapack is required to build this product.  Please edit buildProduct.xml or set the &quot;deltapack&quot; property." />
 
-		<property name="pluginPath" 
-			value="${basedir}/..${path.separator}${deltapack}"/>
+		<echo message="pluginPath=${deltapack}"/>
+		<property name="pluginPath" value="${deltapack}"/>
 
 		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
 	</target>

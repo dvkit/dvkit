@@ -13,7 +13,7 @@
     	depends="init,collect_eclipse,collect_cdt,collect_wst,
     	collect_emf,collect_dltk,collect_zest,collect_vrapper,
     	collect_sveditor,collect_elt,collect_shelled,
-    	collect_linuxtools">
+    	collect_linuxtools,collect_wixtools">
             
     </target>
 	
@@ -370,5 +370,36 @@
 			<arg value="${mirror_ftp}/${linuxtools_release}"/>
 		</exec>
 	</target>
+
+	<!-- WixTools -->
+	<condition property="fetch.wixtools">
+		<or>
+			<not>
+				<available file="${packages_dir}/${wixtools_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<target name="collect_wixtools" if="${fetch.wixtools}">
+		<delete file="${packages_dir}/${wixtools_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="-nv"/>
+			<arg value="-O"/>
+			<arg value="${wixtools_zip}"/>
+			<arg value="${wixtools_release}"/>
+		</exec>
+	</target>
+
+	<!--
+	<target name="collect_jre" depends="collect_jre_linux,
+		collect_jre_linux_x86_64,collect_jre_win32,collect_jre_win32_x86_64">
+	</target>
+	
+	<target name="collect_jre_linux" if="${fetch.jre_linux}">
+	</target>
+	  -->
 	
 </project>

@@ -33,7 +33,14 @@ else
   tar xvzf ../packages/${eclipse_linux_tgz}
 fi
 
+mkdir deltapack
+cd deltapack
+
+unzip -o ../../packages/${eclipse_delta_pack_zip}
+
 cd $pwd
+
+export ECLIPSE_HOME=`cd ../buildRoot/eclipse ; pwd`
 
 ../buildRoot/eclipse/eclipse \
     -nosplash -application org.eclipse.ant.core.antRunner \
@@ -41,5 +48,10 @@ cd $pwd
     -buildfile build.xml      \
     -data ../buildRoot/ws     \
     -verbose                  \
-    -Dos=linux -Dws=gtk -Darch=$arch $extra_defs build_dvkit
+    $extra_defs build_dvkit
+
+
+#    -Dos=linux -Dws=gtk -Darch=$arch $extra_defs build_dvkit
+
+
 

@@ -29,33 +29,21 @@
          </property>
          <property
                name="startupProgressRect"
-               value="0,280,455,15">
+               value="5,275,445,15">
          </property>
          <property
                name="startupMessageRect"
-               value="7,220,441,20">
-         </property>
-         <property
-               name="aboutImage"
-               value="product_lg.gif">
-         </property>
-         <property
-               name="aboutText"
-               value="DVKit Design Verification IDE">
+               value="7,252,445,20">
          </property>
          <property
                name="windowImages"
                value="window_img_16_16.gif,window_img_32_32.gif,window_img_48_48.gif,window_img_64_64.gif,window_img_128_128.gif">
          </property>
+         <property
+               name="startupForegroundColor"
+               value="000000">
+         </property>
       </product>
-   </extension>
-   <extension
-         point="org.eclipse.e4.ui.css.swt.theme">
-      <theme
-            basestylesheeturi="net.sf.dvkit.product.theme1"
-            id="net.sf.dvkit.product.defaultTheme"
-            label="Theme">
-      </theme>
    </extension>
 
 </plugin>

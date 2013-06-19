@@ -46,8 +46,6 @@
 		<mkdir dir="${buildRun}"/> 
 		<delete dir="${build}"/> 
 		<mkdir dir="${build}"/> 
-		<property name="baseLocation" value="${eclipse.home}"/>
-		
 		
 		<copy todir="${build}">
 			<fileset dir="${dvkit_srcdir}">
@@ -57,6 +55,7 @@
 				<exclude name="**/*.git/**"/>
 			</fileset>
 		</copy>
+
 		<copy todir="${build}" overwrite="true">
 			<fileset dir="${dvkit_srcdir}">
 				<include name="features/**/*.xml"/>
@@ -70,16 +69,10 @@
 			</filterset>
 		</copy>
 		
-		<!--
-		<unzip dest="${sveditor}/eclipse">
-			<fileset dir="${buildResult}">
-				<include name="sveditor-feature-${feature.version}.zip"/>
-			</fileset>
-		</unzip> 
-		  -->
-		
 		<copy file="${basedir}/mk_dvkit_1.xml" todir="${buildRun}"/>
-		<ant antfile="${buildRun}/mk_dvkit_1.xml" dir="${buildRun}"/>
+		<ant antfile="${buildRun}/mk_dvkit_1.xml" dir="${buildRun}">
+			<property name="baseLocation" value="${eclipse.home}"/>
+                </ant>
 
 		<copy todir="${buildResult}">
 			<fileset dir="${build}/I.dvkit">
@@ -99,7 +92,7 @@
 		<mkdir dir="${installerTmp}"/>
 		<unzip dest="${installerTmp}">
 			<fileset dir="${buildResult}">
-				<include name="dvkit-${dvkit_version}-${os}_x86_64.zip"/>
+				<include name="dvkit-${dvkit_version}-win32_x86_64.zip"/>
 			</fileset>
 		</unzip>
 		<ant antfile="${basedir}/mk_msi.xml" 
@@ -117,7 +110,7 @@
 		<mkdir dir="${installerTmp}"/>
 		<unzip dest="${installerTmp}">
 			<fileset dir="${buildResult}">
-				<include name="dvkit-${dvkit_version}-${os}_x86.zip"/>
+				<include name="dvkit-${dvkit_version}-win32_x86.zip"/>
 			</fileset>
 		</unzip>
 		<ant antfile="${basedir}/mk_msi.xml" 
@@ -236,6 +229,13 @@
 				<include name="${eclipse_delta_pack_zip}"/>
 			</fileset>
 		</unzip>
+
+		<mkdir dir="${buildRoot}/wixtools"/>
+		<unzip dest="${buildRoot}/wixtools">
+			<fileset dir="${basedir}/../packages">
+				<include name="${wixtools_zip}"/>
+			</fileset>
+		</unzip>
 				
 	</target>
 
@@ -251,7 +251,7 @@
 	</target>
 	  -->
 	
-	<target name="win_zip" if="is_win">
+	<target name="win_zip">
 		<antcall target="install_addins">
 			<param name="c_os" value="win32"/>
 			<param name="c_ws" value="win32"/>
@@ -265,7 +265,7 @@
 		</antcall>
 	</target>
 
-	<target name="linux_zip" unless="is_win">
+	<target name="linux_zip">
 		<antcall target="install_addins">
 			<param name="c_os" value="linux"/>
 			<param name="c_ws" value="gtk"/>
@@ -304,6 +304,10 @@
 	</macrodef>
 	
 	<target name="install_addins">
+		<condition property="c_is_win">
+			<equals arg1="${c_os}" arg2="win32"/>
+		</condition>
+
 		<delete dir="${buildResult}/dvkit-${dvkit_version}"/>
 		<unzip dest="${buildResult}" 
                     src="${buildResult}/dvkit-${c_os}.${c_ws}.${c_arch}.zip"/>
@@ -346,7 +350,10 @@
 			tag="AddTCL"
 			repository="file://${basedir}/../buildRoot/dltk"/>
 		
-		<install installIU="net.sourceforge.vrapper.feature.group,net.sourceforge.vrapper.eclipse.cdt.feature.feature.group,net.sourceforge.vrapper.plugin.ipmotion.feature.group,net.sourceforge.vrapper.plugin.surround.feature.group"
+		<install installIU="net.sourceforge.vrapper.feature.group,
+                                    net.sourceforge.vrapper.eclipse.cdt.feature.feature.group,
+                                    net.sourceforge.vrapper.plugin.ipmotion.feature.group,
+                                    net.sourceforge.vrapper.plugin.surround.feature.group"
 			tag="AddVrapper"
 			repository="file://${basedir}/../buildRoot/vrapper"/>
 		
@@ -377,13 +384,13 @@
 	</target>
 	
 	<!-- Currently, ELT is not supported on Windows -->
-	<target name="install_elt" unless="is_win">
+	<target name="install_elt" unless="c_is_win">
 		<install installIU="com.google.eclipse.elt.feature.group"
 			tag="AddELT"
 			repository="file://${basedir}/../buildRoot/elt"/>
 	</target>
 
-	<target name="tar_unix" unless="is_win">
+	<target name="tar_unix" unless="c_is_win">
 		<exec executable="chmod" dir="${buildResult}/dvkit-${dvkit_version}">
 			<arg value="+x"/>
 			<arg value="dvkit"/>
@@ -395,7 +402,7 @@
 		</exec>
 	</target>
 
-	<target name="zip_windows" if="is_win">
+	<target name="zip_windows" if="c_is_win">
 		<zip destfile="${buildResult}/dvkit-${dvkit_version}-${c_os}_${c_arch}.zip"
 			basedir="${buildResult}" includes="dvkit-${dvkit_version}/**">
 		</zip>

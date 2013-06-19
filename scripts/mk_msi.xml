@@ -6,39 +6,76 @@
 		<os arch="amd64"/>
 	</condition>
 	<property file="${script.dir}/../etc/dvkit_info.properties"/>
-	<property name="candle" value="candle.exe"/>
-	<property name="light" value="light.exe"/>
+	<property name="buildRoot" value="${script.dir}/../buildRoot"/>
+	<property name="wixtools" value="${buildRoot}/wixtools"/>
+
+
+	<condition property="is_win">
+		<os family="windows"/>
+	</condition>
+
+ 	<condition property="path_pref"
+		else="z:"
+		value="">
+		<os family="windows"/>
+	</condition>
+
+	<condition 
+		property="candle"
+		value="${wixtools}/candle.exe"
+		else="${script.dir}/wix_wrappers/candle">
+		<os family="windows"/>
+	</condition>
+
+	<condition 
+		property="light"
+		value="${wixtools}/light.exe"
+		else="${script.dir}/wix_wrappers/light">
+		<os family="windows"/>
+	</condition>
+
 	<property name="script.dir" value="${basedir}/scripts"/>
 	<property name="etc.dir" value="${basedir}/etc"/>
 	<property name="dest" value="${basedir}/dvkit.msi"/>
 	<property name="ProgramFilesFolder" value="ProgramFilesFolder"/>
 	<property name="Win64" value="no"/>
 	
-	<target name="mk_msi" depends="mk_filelist">
+	<target name="mk_msi" depends="mk_filelist_win32,mk_filelist_unix">
 		<exec executable="${candle}" failonerror="true">
-			<arg value="${script.dir}/dvkit.wxs"/>
+			<arg value="${path_pref}${script.dir}/dvkit.wxs"/>
 			<arg value="-dversion=${dvkit_version}"/>
-			<arg value="-dbasedir=${basedir}"/>
-			<arg value="-detc.dir=${etc.dir}"/>
+			<arg value="-dbasedir=${path_pref}${basedir}"/>
+			<arg value="-detc.dir=${path_pref}${etc.dir}"/>
 			<arg value="-darch=${arch}"/>
 			<arg value="-dProgramFilesFolder=${ProgramFilesFolder}"/>
 			<arg value="-dWin64=${Win64}"/>
 			<arg value="-ext"/>
 			<arg value="WixUIExtension"/>
+			<env key="WIXTOOLS" value="${wixtools}"/>
 		</exec>
 		<exec executable="${light}" failonerror="true">
 			<arg value="dvkit.wixobj"/>
 			<arg value="-ext"/>
 			<arg value="WixUIExtension"/>
+			<env key="WIXTOOLS" value="${wixtools}"/>
 		</exec>
 		<copy tofile="${dest}" file="${basedir}/dvkit.msi"/>
 	</target>
 	
-	<target name="mk_filelist">
+	<target name="mk_filelist_win32" if="is_win">
 		<exec executable="cscript" failonerror="true">
 			<arg value="${script.dir}/wxigen.js"/>
 			<arg value="${basedir}"/>
 			<arg value="${basedir}/dvkit_files.wxi"/>
 		</exec>
 	</target>
+
+	<target name="mk_filelist_unix" unless="is_win">
+		<exec executable="perl" failonerror="true">
+			<arg value="${script.dir}/wxigen.pl"/>
+			<arg value="${basedir}"/>
+			<arg value="${basedir}/dvkit_files.wxi"/>
+		</exec>
+	</target>
 </project>
+

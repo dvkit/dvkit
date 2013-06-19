@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="net.sf.dvkit" id="net.sf.dvkit.product.dvkit" application="org.eclipse.ui.ide.workbench" version="1.2.3" useFeatures="true" includeLaunchers="true">
+<product name="DVKit" id="net.sf.dvkit.product.dvkit" application="org.eclipse.ui.ide.workbench" version="1.2.3" useFeatures="true" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -24,14 +24,17 @@
       <win useIco="false">
          <bmp
             winSmallHigh="/net.sf.dvkit.feature/window_img_16_16.bmp"
+            winSmallLow="/net.sf.dvkit.feature/window_img_16_16_8bit.bmp"
             winMediumHigh="/net.sf.dvkit.feature/window_img_32_32.bmp"
+            winMediumLow="/net.sf.dvkit.feature/window_img_32_32_8bit.bmp"
             winLargeHigh="/net.sf.dvkit.feature/window_img_48_48.bmp"
+            winLargeLow="/net.sf.dvkit.feature/window_img_48_48_8bit.bmp"
             winExtraLargeHigh="/net.sf.dvkit.feature/window_img_256_256.bmp"/>
       </win>
    </launcher>
 
    <vm>
-      <linux include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JRE-1.1</linux>
+      <linux include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JRE-1.1</linux>
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</windows>
    </vm>
 
@@ -126,6 +129,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <feature id="org.eclipse.equinox.p2.user.ui"/>
       <feature id="org.eclipse.rcp"/>
       <feature id="org.eclipse.equinox.p2.extras.feature"/>
+      <feature id="org.eclipse.equinox.executable"/>
    </features>
 
 

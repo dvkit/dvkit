@@ -1,0 +1,46 @@
+= DVKit - An IDE for Design Verification Engineers =
+
+Design Verification (DV) engineers are responsible for developing and maintaining a myriad of
+files in a myriad of HVL, software, and script languages. A typical project might use PERL scripts
+at the top level, Makefiles beneath, to control a verification environment composed of SystemVerilog
+and C/C++ code. Meanwhile, tool scripts might be implemented in TCL.
+
+DVKit provides an Eclipse-based integrated development environment (IDE) with support for 
+editing common files used in a design verification environment. DVKit packages the following 
+Eclipse plugins to provide a easily-installed solution for design verification development:
+
+
+== Installing DVKit ==
+DVKit can be installed by downloading one of the prebuilt packages. Pre-build packages are
+currently provided for:
+
+* 32-bit Windows installer
+* 64-bit Windows installer
+* 32-bit Windows zip file
+* 64-bit Windows zip file
+* 32-bit .deb
+* 64-bit .deb
+* 32-bit Linux tar.gz
+* 64-bit Linux tar.gz
+
+All packages can be obtained from the Files area on the DVKit Sourceforge project:
+
+
+
+
+== Contributing to DVKit ==
+Currently DVKit is a collection of unmodified Eclipse plug-ins. 
+
+* Request inclusion of your favorite Eclipse plug-in
+* File bugs with the build
+
+In the future, DVKit aspires to provide DV-specific extensions to
+language-editing plug-ins. Please request such extension, such as:
+* Content assist in the shell-script editor for common EDA tool commands
+* Content assist in the TCL editor for common EDA script commands
+
+DVKit is looking for Java- and Eclipse-savy developers. If you're interesting
+in collaborating, contact us!
+
+
+

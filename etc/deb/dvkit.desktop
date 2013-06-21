@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=DVKit 1.2.3
+Exec=dvkit
+Type=Application
+Terminal=false
+Icon=dvkit
+X-KDE-StartupNotify=false
+Categories=Development
+Additional Categories=IDE;Electronics;Engineering
+

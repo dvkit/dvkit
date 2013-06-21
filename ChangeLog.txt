@@ -1,0 +1,15 @@
+
+-- 1.0.0 Release --
+
+- Initial release of DVKit. Included packages are:
+  - Eclipse (core) 4.3rc4
+  - CDT 8.1.2
+  - Webtools 3.5.0 (XML, JavaScript editors)
+  - Java Development Tools (required for JavaScript)
+  - DLTK 4.0 (TCL editor) 
+  - Vrapper 0.32.0
+  - SVEditor 1.2.7
+  - ELT 1.1 (Linux-only terminal view)
+  - ShellEd 2.0.2 (Bash/Csh editors)
+
+------------------------------------------------------------------------------

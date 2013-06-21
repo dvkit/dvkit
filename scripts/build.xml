@@ -1,0 +1,18 @@
+<project name="build_dvkit" default="mk_dvkit">
+	
+	<property file="${basedir}/../etc/dvkit_info.properties"/>
+	<property name="feature.version" value="${dvkit_version}"/>
+
+	<target name="build_dvkit" depends="collect,mk_dvkit">
+		<ant antfile="${basedir}/mk_dvkit.xml" target="mk_dvkit"/>
+	</target>
+	
+	<target name="collect">
+		<ant antfile="${basedir}/collect.xml" target="collect"/>
+	</target>
+	
+	<target name="mk_dvkit">
+		<ant antfile="${basedir}/mk_dvkit.xml" target="mk_dvkit"/>
+	</target>
+	
+</project>

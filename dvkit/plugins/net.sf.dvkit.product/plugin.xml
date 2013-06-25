@@ -43,6 +43,14 @@
                name="startupForegroundColor"
                value="000000">
          </property>
+         <property
+               name="aboutImage"
+               value="product_lg.gif">
+         </property>
+         <property
+               name="aboutText"
+               value="DVKit Design Verification IDE">
+         </property>
       </product>
    </extension>
 

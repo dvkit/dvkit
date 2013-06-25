@@ -1,0 +1,27 @@
+
+<div id="menu">
+	<table>
+	<tr><td>
+		<img src="imgs/window_img_128_128.gif"/>
+	</td></tr>
+	</table>
+	<hr/>
+	<table>
+	<tr><td>
+		<a href="index.html">Home</a>
+	</td></tr>
+	</table>
+	<hr/>
+	<table>
+	<tr><td>
+		<a href="http://sourceforge.net/projects/dvkit">Project Page</a>
+	</td></tr>
+	<tr><td>
+		<a href="http://sourceforge.net/p/dvkit/bugs">Defects</a>
+	</td></tr>
+	<tr><td>
+		<a href="http://sourceforge.net/projects/dvkit/files">Download</a>
+	</td></tr>
+	</table>
+	<hr/>
+</div>

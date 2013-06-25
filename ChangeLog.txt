@@ -1,4 +1,12 @@
 
+-- 1.0.1 Release --
+
+- #(enh)  Add Mylyn Wikitools plugin
+
+- #(nobug) Correct a Java-version dependency that could cause DVKit to 
+  appear to be 'unbranded' when used with an older JRE
+
+------------------------------------------------------------------------------
 -- 1.0.0 Release --
 
 - Initial release of DVKit. Included packages are:

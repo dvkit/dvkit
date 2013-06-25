@@ -6,6 +6,41 @@
 	<property file="${basedir}/packages.properties"/>
 	<property name="eclipse_release" value="${mirror_ftp}/eclipse/downloads/drops4/S-4.3RC4-201306052000"/>
 	
+	<property name="eclipse.home" location="${buildRoot}/eclipse"/>
+	<condition property="eclipsec" 
+		value="${eclipse.home}/eclipsec" 
+		else="${eclipse.home}/eclipse">
+		<os family="windows"/>
+	</condition>
+
+	<macrodef name="mirrorUpdate">
+		<attribute name="source"/>
+		<attribute name="dest"/>
+		
+		<sequential>
+			<exec executable="${eclipsec}">
+				<arg value="-nosplash"/>
+				<arg value="--launcher.suppressErrors"/>
+				<arg value="-application"/>
+				<arg value="org.eclipse.equinox.p2.artifact.repository.mirrorApplication"/>
+				<arg value="-source"/>
+				<arg value="@{source}"/>
+				<arg value="-destination"/>
+				<arg value="file://@{dest}"/>
+			</exec>
+			<exec executable="${eclipsec}">
+				<arg value="-nosplash"/>
+				<arg value="--launcher.suppressErrors"/>
+				<arg value="-application"/>
+				<arg value="org.eclipse.equinox.p2.metadata.repository.mirrorApplication"/>
+				<arg value="-source"/>
+				<arg value="@{source}"/>
+				<arg value="-destination"/>
+				<arg value="file://@{dest}"/>
+			</exec>
+		</sequential>
+	</macrodef>
+	
 	<!-- - - - - - - - - - - - - - - - - - 
           target: name                      
          - - - - - - - - - - - - - - - - - -->
@@ -13,7 +48,7 @@
     	depends="init,collect_eclipse,collect_cdt,collect_wst,
     	collect_emf,collect_dltk,collect_zest,collect_vrapper,
     	collect_sveditor,collect_elt,collect_shelled,
-    	collect_linuxtools,collect_wixtools">
+    	collect_linuxtools,collect_wixtools,collect_epic">
             
     </target>
 	
@@ -401,5 +436,24 @@
 	<target name="collect_jre_linux" if="${fetch.jre_linux}">
 	</target>
 	  -->
+	
+	<condition property="fetch.epic">
+		<or>
+			<not>
+				<available file="${packages_dir}/${epic_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<target name="collect_epic" if="fetch.epic">
+		<delete file="${packages_dir}/${epic_zip}"/>
+		<mkdir dir="${packages_dir}/epic"/>
+		<mirrorUpdate source="${epic_updates}" dest="${packages_dir}/epic"/>
+		<zip destfile="${packages_dir}/${epic_zip}"
+			basedir="${packages_dir}/epic"
+			includes="**/*"/>
+		<delete dir="${packages_dir}/epic"/>
+	</target>
 	
 </project>

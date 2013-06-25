@@ -180,6 +180,13 @@
 				<include name="${dltk_zip}"/>
 			</fileset>
 		</unzip>
+
+		<mkdir dir="${buildRoot}/epic"/>
+		<unzip dest="${buildRoot}/epic">
+			<fileset dir="${basedir}/../packages">
+				<include name="${epic_zip}"/>
+			</fileset>
+		</unzip>
 		
 		<mkdir dir="${buildRoot}/vrapper"/>
 		<unzip dest="${buildRoot}/vrapper">
@@ -349,6 +356,12 @@
 		<install installIU="org.eclipse.dltk.tcl.feature.group"
 			tag="AddTCL"
 			repository="file://${basedir}/../buildRoot/dltk"/>
+
+<!--
+		<install installIU="org.epic.feature.main.feature.group"
+			tag="AddEPIC"
+			repository="file://${basedir}/../buildRoot/epic"/>
+  -->
 		
 		<install installIU="net.sourceforge.vrapper.feature.group,
                                     net.sourceforge.vrapper.eclipse.cdt.feature.feature.group,

@@ -12,13 +12,17 @@
 		else="${eclipse.home}/eclipse">
 		<os family="windows"/>
 	</condition>
+	
+	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
+		<classpath path="${basedir}/xmltask.jar"/>
+	</taskdef>
 
 	<macrodef name="mirrorUpdate">
 		<attribute name="source"/>
 		<attribute name="dest"/>
 		
 		<sequential>
-			<exec executable="${eclipsec}">
+			<exec executable="${eclipsec}" failonerror="true">
 				<arg value="-nosplash"/>
 				<arg value="--launcher.suppressErrors"/>
 				<arg value="-application"/>
@@ -28,7 +32,7 @@
 				<arg value="-destination"/>
 				<arg value="file://@{dest}"/>
 			</exec>
-			<exec executable="${eclipsec}">
+			<exec executable="${eclipsec}" failonerror="true">
 				<arg value="-nosplash"/>
 				<arg value="--launcher.suppressErrors"/>
 				<arg value="-application"/>
@@ -48,7 +52,8 @@
     	depends="init,collect_eclipse,collect_cdt,collect_wst,
     	collect_emf,collect_dltk,collect_zest,collect_vrapper,
     	collect_sveditor,collect_elt,collect_shelled,
-    	collect_linuxtools,collect_wixtools,collect_epic">
+    	collect_linuxtools,collect_wixtools,collect_epic,
+    	collect_pydev">
             
     </target>
 	
@@ -450,10 +455,45 @@
 		<delete file="${packages_dir}/${epic_zip}"/>
 		<mkdir dir="${packages_dir}/epic"/>
 		<mirrorUpdate source="${epic_updates}" dest="${packages_dir}/epic"/>
+		<unzip src="${packages_dir}/epic/artifacts.jar"
+			dest="${packages_dir}/epic"/>
+		<delete file="${packages_dir}/epic/artifacts.jar"/>
+		<xmltask source="${packages_dir}/epic/artifacts.xml"
+			dest="${packages_dir}/epic/artifacts.xml">
+			<remove path="//repositoryProperties"/>
+		</xmltask>
 		<zip destfile="${packages_dir}/${epic_zip}"
 			basedir="${packages_dir}/epic"
 			includes="**/*"/>
 		<delete dir="${packages_dir}/epic"/>
+	</target>
+
+	<condition property="fetch.pydev">
+		<or>
+			<not>
+				<available file="${packages_dir}/${pydev_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+
+	<target name="collect_pydev" if="fetch.pydev">
+		<delete file="${packages_dir}/${pydev_zip}"/>
+		<mkdir dir="${packages_dir}/pydev"/>
+		<mirrorUpdate source="${pydev_updates}" dest="${packages_dir}/pydev"/>
+		<!--
+		<unzip src="${packages_dir}/pydev/artifacts.jar"
+			dest="${packages_dir}/epic"/>
+		<delete file="${packages_dir}/epic/artifacts.jar"/>
+		<xmltask source="${packages_dir}/epic/artifacts.xml"
+			dest="${packages_dir}/epic/artifacts.xml">
+			<remove path="//repositoryProperties"/>
+		</xmltask>
+		-->
+		<zip destfile="${packages_dir}/${pydev_zip}"
+			basedir="${packages_dir}/pydev"
+			includes="**/*"/>
+		<delete dir="${packages_dir}/pydev"/>
 	</target>
 	
 </project>

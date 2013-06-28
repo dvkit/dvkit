@@ -187,7 +187,14 @@
 				<include name="${epic_zip}"/>
 			</fileset>
 		</unzip>
-		
+
+		<mkdir dir="${buildRoot}/pydev"/>
+		<unzip dest="${buildRoot}/pydev">
+			<fileset dir="${basedir}/../packages">
+				<include name="${pydev_zip}"/>
+			</fileset>
+		</unzip>
+
 		<mkdir dir="${buildRoot}/vrapper"/>
 		<unzip dest="${buildRoot}/vrapper">
 			<fileset dir="${basedir}/../packages">
@@ -357,12 +364,14 @@
 			tag="AddTCL"
 			repository="file://${basedir}/../buildRoot/dltk"/>
 
-<!--
 		<install installIU="org.epic.feature.main.feature.group"
 			tag="AddEPIC"
 			repository="file://${basedir}/../buildRoot/epic"/>
-  -->
-		
+
+		<install installIU="org.python.pydev.feature.feature.group"
+			tag="AddPyDev"
+			repository="file://${basedir}/../buildRoot/pydev"/>
+			
 		<install installIU="net.sourceforge.vrapper.feature.group,
                                     net.sourceforge.vrapper.eclipse.cdt.feature.feature.group,
                                     net.sourceforge.vrapper.plugin.ipmotion.feature.group,
@@ -420,5 +429,8 @@
 			basedir="${buildResult}" includes="dvkit-${dvkit_version}/**">
 		</zip>
 	</target>
-	
+
 </project>
+
+
+

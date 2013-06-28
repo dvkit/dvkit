@@ -22,14 +22,14 @@
 
 	<condition 
 		property="candle"
-		value="${wixtools}/candle.exe"
+		value="candle.exe"
 		else="${script.dir}/wix_wrappers/candle">
 		<os family="windows"/>
 	</condition>
 
 	<condition 
 		property="light"
-		value="${wixtools}/light.exe"
+		value="light.exe"
 		else="${script.dir}/wix_wrappers/light">
 		<os family="windows"/>
 	</condition>

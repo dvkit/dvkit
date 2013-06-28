@@ -1,4 +1,13 @@
 
+-- 1.0.2 Release --
+
+- #(enh) Add E.P.I.C for editing PERL files
+
+- #(enh) Add PyDev for editing Python files
+
+- #(update) Update to SVEditor 1.2.8
+
+------------------------------------------------------------------------------
 -- 1.0.1 Release --
 
 - #(enh)  Add Mylyn Wikitools plugin

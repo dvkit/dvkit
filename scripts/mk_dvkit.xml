@@ -80,6 +80,7 @@
 			</fileset>
 		</copy>
 
+		<antcall target="macosx_zip"/>
 		<antcall target="win_zip"/>
 		<antcall target="linux_zip"/>
 		
@@ -293,6 +294,14 @@
 		</antcall>
 	</target>	
 
+	<target name="macosx_zip">
+		<antcall target="install_addins">
+			<param name="c_os" value="macosx"/>
+			<param name="c_ws" value="cocoa"/>
+			<param name="c_arch" value="x86_64"/>
+		</antcall>
+	</target>
+
 	<macrodef name="install">
 		<attribute name="installIU"/>
 		<attribute name="repository"/>
@@ -320,6 +329,35 @@
 	<target name="install_addins">
 		<condition property="c_is_win">
 			<equals arg1="${c_os}" arg2="win32"/>
+		</condition>
+
+		<!-- Processing Unix on Windows platform -->
+		<condition property="c_is_unix_win">
+			<and>
+				<os family="windows"/>
+				<or>
+					<equals arg1="${c_os}" arg2="linux"/>
+					<equals arg1="${c_os}" arg2="macosx"/>
+				</or>
+			</and>
+		</condition>
+
+		<condition property="c_is_unix_unix">
+			<and>
+				<not>
+					<os family="windows"/>
+				</not>
+				<or>
+					<equals arg1="${c_os}" arg2="linux"/>
+					<equals arg1="${c_os}" arg2="macosx"/>
+				</or>
+			</and>
+		</condition>
+
+		<condition property="unix_dvkit_exe"
+			value="dvkit.app/Contents/MacOS/dvkit"
+			else="dvkit">
+			<equals arg1="${c_os}" arg2="macosx"/>
 		</condition>
 
 		<delete dir="${buildResult}/dvkit-${dvkit_version}"/>
@@ -400,7 +438,8 @@
 			repository="file://${basedir}/../buildRoot/shelled"/>
 
 		<delete file="${buildResult}/dvkit-${c_os}.${c_ws}.${c_arch}.zip"/>
-		<antcall target="tar_unix"/>
+		<antcall target="tar_unix_unix"/>
+		<antcall target="tar_unix_win"/>
 		<antcall target="zip_windows"/>
 		<delete dir="${buildResult}/dvkit-${dvkit_version}"/>
 	</target>
@@ -412,7 +451,7 @@
 			repository="file://${basedir}/../buildRoot/elt"/>
 	</target>
 
-	<target name="tar_unix" unless="c_is_win">
+	<target name="tar_unix_unix" if="c_is_unix_unix">
 		<exec executable="chmod" dir="${buildResult}/dvkit-${dvkit_version}">
 			<arg value="+x"/>
 			<arg value="dvkit"/>
@@ -421,6 +460,25 @@
 			<arg value="czf"/>
 			<arg value="dvkit-${dvkit_version}-${c_os}_${c_arch}.tar.gz"/>
 			<arg value="dvkit-${dvkit_version}"/>
+		</exec>
+	</target>
+
+	<target name="tar_unix_win" if="c_is_unix_win">
+		<exec executable="tar" dir="${buildResult}" failonerror="true">
+			<arg value="--exclude=dvkit-${dvkit_version}/${unix_dvkit_exe}"/>
+			<arg value="-cf"/>
+			<arg value="dvkit-${dvkit_version}-${c_os}_${c_arch}.tar"/>
+			<arg value="dvkit-${dvkit_version}"/>
+		</exec>
+		<exec executable="tar" dir="${buildResult}" failonerror="true">
+			<arg value="-rf"/>
+			<arg value="dvkit-${dvkit_version}-${c_os}_${c_arch}.tar"/>
+			<arg value="--mode=755"/>
+			<arg value="dvkit-${dvkit_version}/${unix_dvkit_exe}"/>
+		</exec>
+		<exec executable="gzip" dir="${buildResult}" failonerror="true">
+			<arg value="-f"/>
+			<arg value="dvkit-${dvkit_version}-${c_os}_${c_arch}.tar"/>
 		</exec>
 	</target>
 

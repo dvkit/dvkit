@@ -22,16 +22,39 @@ done
 rm -rf ../buildRoot
 mkdir ../buildRoot
 
+plat=`uname`
 arch=`uname -m`
 pwd=`pwd`
 
+
+if test "$plat" = "MINGW32_NT-6.1"; then
+  eclipse=eclipsec
+else
+  eclipse=eclipse
+fi
+
+${ECLIPSE_HOME}/$eclipse \
+    -nosplash -application org.eclipse.ant.core.antRunner \
+    --launcher.suppressErrors \
+    -buildfile build.xml      \
+    -data ../buildRoot/ws     \
+    -verbose                  \
+    $extra_defs build_dvkit
+
+exit 0
+
 cd ../buildRoot
 
-if test $arch = "x86_64"; then
-  tar xvzf ../packages/${eclipse_linux_x86_64_tgz}
+if test "$plat" = "MINGW32_NT-6.1"; then
+  unzip ../packages/${eclipse_win32_x86_64_zip}
 else
-  tar xvzf ../packages/${eclipse_linux_tgz}
+  if test $arch = "x86_64"; then
+    tar xvzf ../packages/${eclipse_linux_x86_64_tgz}
+  else
+    tar xvzf ../packages/${eclipse_linux_tgz}
+  fi
 fi
+
 
 mkdir deltapack
 cd deltapack

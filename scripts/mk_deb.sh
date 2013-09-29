@@ -33,9 +33,10 @@ fi
 ${ECLIPSE_HOME}/$eclipse \
     -nosplash -application org.eclipse.ant.core.antRunner \
     --launcher.suppressErrors \
-    -buildfile build.xml      \
+    -buildfile mk_deb.xml      \
     -data ../buildRoot/ws     \
-    $extra_defs build_dvkit
+    -verbose \
+    $extra_defs mk_deb
 
 exit 0
 

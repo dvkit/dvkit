@@ -4,6 +4,7 @@
 	<property environment="env"/>
 	<property file="${basedir}/packages.properties"/>
 	<property file="${basedir}/../etc/dvkit_info.properties"/>
+	<property name="feature.version" value="${dvkit_version}"/>
 	
 	<condition property="is_win">
 		<os family="windows"/>
@@ -125,7 +126,7 @@
 		</ant>
 	</target>
 	
-	<target name="mk_deb" unless="is_win">
+	<target name="mk_deb">
 		<ant antfile="${basedir}/mk_deb.xml" inheritall="false">
 			<property name="arch" value="x86"/>
 			<property name="deb_arch" value="i386"/>
@@ -137,15 +138,13 @@
 	</target>
 	
 	<target name="mk_dvkit-pre">
-		<!--
+<!--		
 		<delete dir="${buildRoot}"/>
-		  -->
 		<mkdir dir="${buildRoot}"/>
 	
-		<!--
 		<antcall target="linux_unpack_eclipse"/>
 		<antcall target="windows_unpack_eclipse"/>
-		  -->
+  -->
 		
 		<mkdir dir="${buildRoot}/zest"/>
 		<unzip dest="${buildRoot}/zest">
@@ -254,7 +253,6 @@
 				
 	</target>
 
-	<!--
 	<target name="linux_unpack_eclipse" unless="${is_win}">
 		<exec executable="tar" dir="${buildRoot}" failonerror="true">
 			<arg value="xvf"/>
@@ -264,7 +262,6 @@
 	
 	<target name="windows_unpack_eclipse" if="${is_win}">
 	</target>
-	  -->
 	
 	<target name="win_zip">
 		<antcall target="install_addins">
@@ -410,10 +407,15 @@
 			tag="AddPyDev"
 			repository="file://${basedir}/../buildRoot/pydev"/>
 			
-		<install installIU="net.sourceforge.vrapper.feature.group,
-                                    net.sourceforge.vrapper.eclipse.cdt.feature.feature.group,
-                                    net.sourceforge.vrapper.plugin.ipmotion.feature.group,
-                                    net.sourceforge.vrapper.plugin.surround.feature.group"
+		<install installIU="
+			net.sourceforge.vrapper.feature.group,
+			net.sourceforge.vrapper.eclipse.cdt.feature.feature.group,
+			net.sourceforge.vrapper.eclipse.jdt.feature.feature.group,
+			net.sourceforge.vrapper.eclipse.pydev.feature.feature.group,
+            net.sourceforge.vrapper.plugin.argtextobj.feature.group,
+            net.sourceforge.vrapper.plugin.ipmotion.feature.group,
+            net.sourceforge.vrapper.plugin.splitEditor.feature.group,
+            net.sourceforge.vrapper.plugin.surround.feature.group"
 			tag="AddVrapper"
 			repository="file://${basedir}/../buildRoot/vrapper"/>
 		

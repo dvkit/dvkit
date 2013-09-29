@@ -4,7 +4,6 @@
 	<property name="force" value="false"/>
 	
 	<property file="${basedir}/packages.properties"/>
-	<property name="eclipse_release" value="${mirror_ftp}/eclipse/downloads/drops4/S-4.3RC4-201306052000"/>
 	
 	<property name="eclipse.home" location="${buildRoot}/eclipse"/>
 	<condition property="eclipsec" 
@@ -148,8 +147,10 @@
 				</not>
 				<equals arg1="${force}" arg2="true"/>
 			</or>
+			<!--
 			<os name="windows"/>
 			<os arch="amd64"/>
+			  -->
 		</and>
 	</condition>
 	

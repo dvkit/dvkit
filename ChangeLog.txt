@@ -1,11 +1,24 @@
 
--- 1.0.2 Release --
+-- 1.1.0 Release --
 
 - #(enh) Add E.P.I.C for editing PERL files
 
-- #(enh) Add PyDev for editing Python files
+- #(enh) Add PyDev 2.7.5 for editing Python files
 
-- #(update) Update to SVEditor 1.2.8
+- #(enh) Add support for OSX
+
+- #(update) Update to SVEditor 1.4.0
+
+- #(update) Update to Eclipse (core) 4.3.1
+
+- #(update) Update to CDT 8.2.0
+
+- #(update) Update to Vrapper 0.34.1
+
+- #(update) Update to Webtools 3.5.1
+
+- #(update) Update to DLTK 5.0
+
 
 ------------------------------------------------------------------------------
 -- 1.0.1 Release --

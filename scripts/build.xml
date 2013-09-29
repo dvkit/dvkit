@@ -1,18 +1,61 @@
 <project name="build_dvkit" default="mk_dvkit">
 	
 	<property file="${basedir}/../etc/dvkit_info.properties"/>
+	<property file="${basedir}/packages.properties"/>
 	<property name="feature.version" value="${dvkit_version}"/>
-
-	<target name="build_dvkit" depends="collect,mk_dvkit">
-		<ant antfile="${basedir}/mk_dvkit.xml" target="mk_dvkit"/>
+	<property name="buildRoot" location="${basedir}/../buildRoot"/>
+	
+	<condition property="is_win">
+		<os family="windows"/>
+	</condition>
+	
+	<property name="eclipse.home" location="${buildRoot}/eclipse"/>
+	<condition property="eclipsec"
+		value="${buildRoot}/eclipse/eclipsec"
+		else="${buildRoot}/eclipse/eclipse">
+		<os family="windows"/>
+	</condition>
+	
+	<target name="build_dvkit" depends="init,collect,mk_eclipse">
+		<exec executable="${eclipsec}" failonerror="true">
+			<arg value="-console"/>
+			<arg value="-consoleLog"/>
+			<arg value="-nosplash"/>
+			<arg value="-application"/>
+			<arg value="org.eclipse.ant.core.antRunner"/>
+			<arg value="--launcher.suppressErrors"/>
+			<arg value="-data"/>
+			<arg value="${basedir}/../buildRoot/ws2"/>
+			<arg value="-buildfile"/>
+			<arg value="${basedir}/mk_dvkit.xml"/>
+			<arg value="mk_dvkit"/>
+		</exec>
+	</target>
+	
+	<target name="init">
+		<delete dir="${basedir}/../buildRoot"/>
+		<mkdir dir="${basedir}/../buildRoot"/>
 	</target>
 	
 	<target name="collect">
 		<ant antfile="${basedir}/collect.xml" target="collect"/>
 	</target>
 	
+	<target name="mk_eclipse" depends="linux_unpack_eclipse,windows_unpack_eclipse">
+		<mkdir dir="${basedir}/../buildRoot/eclipse/deltapack"/>
+		<unzip dest="${basedir}/../buildRoot/eclipse/deltapack"
+			src="${basedir}/../packages/${eclipse_delta_pack_zip}"/>
+	</target>
+
+	<target name="linux_unpack_eclipse" unless="is_win">
+	</target>
+	
+	<target name="windows_unpack_eclipse" if="is_win">
+		<unzip dest="${basedir}/../buildRoot"
+			src="${basedir}/../packages/${eclipse_win32_x86_64_zip}"/>
+	</target>
+	
 	<target name="mk_dvkit">
-		<ant antfile="${basedir}/mk_dvkit.xml" target="mk_dvkit"/>
 	</target>
 	
 </project>

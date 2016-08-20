@@ -2,7 +2,8 @@
 <feature
       id="net.sf.dvkit.feature"
       label="Feature"
-      version="1.2.3">
+      version="1.2.3"
+      plugin="net.sf.dvkit.product">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]

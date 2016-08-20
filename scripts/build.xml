@@ -1,18 +1,129 @@
 <project name="build_dvkit" default="mk_dvkit">
+	<property environment="env"/>
 	
 	<property file="${basedir}/../etc/dvkit_info.properties"/>
+	<property file="${basedir}/packages.properties"/>
 	<property name="feature.version" value="${dvkit_version}"/>
-
-	<target name="build_dvkit" depends="collect,mk_dvkit">
-		<ant antfile="${basedir}/mk_dvkit.xml" target="mk_dvkit"/>
+	<property name="buildRoot" location="${basedir}/../buildRoot"/>
+	
+	<condition property="is_win">
+		<os family="windows"/>
+	</condition>
+	
+	<condition property="sdk_eclipsec"
+		value="${buildRoot}/eclipse/eclipsec"
+		else="${buildRoot}/eclipse/eclipse">
+		<os family="windows"/>
+	</condition>
+	<property name="eclipse.home" location="${buildRoot}/eclipse"/>
+	<property name="eclipse.home" location="${env.ECLIPSE_HOME}"/>
+	<condition property="eclipsec"
+		value="${eclipse.home}/eclipsec"
+		else="${eclipse.home}/eclipse">
+		<os family="windows"/>
+	</condition>
+	<!--
+	-->
+	
+	<target name="build_dvkit" depends="init,collect,mk_eclipse">
+		<echo message="sdk_eclipsec=${sdk_eclipsec}"/>
+		<exec executable="${sdk_eclipsec}" failonerror="true">
+			<arg value="-console"/>
+			<arg value="-consoleLog"/>
+			<arg value="-nosplash"/>
+			<arg value="-application"/>
+			<arg value="org.eclipse.ant.core.antRunner"/>
+			<arg value="--launcher.suppressErrors"/>
+			<arg value="-data"/>
+			<arg value="${basedir}/../buildRoot/ws2"/>
+			<arg value="-buildfile"/>
+			<arg value="${basedir}/mk_dvkit.xml"/>
+			<arg value="mk_dvkit"/>
+		</exec>
+	</target>
+	
+	<target name="init">
+		<delete dir="${basedir}/../buildRoot"/>
+		<mkdir dir="${basedir}/../buildRoot"/>
 	</target>
 	
 	<target name="collect">
 		<ant antfile="${basedir}/collect.xml" target="collect"/>
 	</target>
 	
+	<macrodef name="install_executables">
+		<attribute name="os"/>
+		<attribute name="ws"/>
+		<attribute name="arch"/>
+		<sequential>
+			<echo message="install_executables: os=@{os} ws=@{ws} arch=@{arch}"/>
+			<exec executable="${eclipsec}" failonerror="true">
+				<arg value="-console"/>
+				<arg value="-consoleLog"/>
+				<arg value="-nosplash"/>
+				<arg value="-application"/>
+				<arg value="org.eclipse.equinox.p2.director"/>
+				<arg value="-installIU"/>
+				<arg value="org.eclipse.equinox.executable.feature.group"/>
+				<arg value="-repository"/>
+				<arg value="file://${basedir}/../buildRoot/eclipse_platform"/>
+				<arg value="-tag"/>
+				<arg value="Launchers"/>
+				<arg value="-destination"/>
+				<arg value="${basedir}/../buildRoot/eclipse"/>			
+				<!--
+				<arg value="-p2.os"/>
+				<arg value="@{os}"/>
+				<arg value="-p2.ws"/>
+				<arg value="@{ws}"/>
+				<arg value="-p2.arch"/>
+				<arg value="@{arch}"/>
+				<arg value="-profile"/>
+				<arg value="eclipse_@{os}@{ws}@{arch}"/>
+				-->
+			</exec>
+		</sequential>
+	</macrodef>
+	
+	<target name="mk_eclipse" depends="linux_unpack_eclipse,windows_unpack_eclipse">
+		<mkdir dir="${basedir}/../buildRoot/eclipse_platform"/>
+		<unzip dest="${basedir}/../buildRoot/eclipse_platform"
+			src="${basedir}/../packages/${eclipse_platform_zip}"/>
+		<install_executables os="win32" ws="win32" arch="x86_64"/>
+		<copy todir="${basedir}/../buildRoot/eclipse/plugins">
+			<fileset dir="${basedir}/../buildRoot/eclipse_platform/plugins"
+				includes="*.jar"/>
+		</copy>
+		<!-- Install the launchers
+		<mkdir dir="${basedir}/../buildRoot/deltapack"/>
+		<p2.mirror source="file://${basedir}/../buildRoot/eclipse_platform">
+			<destination kind="metadata" location="file://${basedir}/../buildRoot/deltapack"/>
+			<destination kind="artifact" location="file://${basedir}/../buildRoot/deltapack"/>
+			
+			<iu id="org.eclipse.platform.feature.group" version=""/>
+			<iu id="org.eclipse.rcp.feature.group" version=""/>
+			<iu id="org.eclipse.equinox.executable.feature.group" version=""/>
+			<slicingOptions includeOptional="false" includeNonGreedy="false" followStrict="true" followOnlyFilteredRequirements="true"/>
+		</p2.mirror>
+		-->
+		<!--
+		<install_executables os="win32" ws="win32" arch="x86"/>
+		<install_executables os="win32" ws="win32" arch="x86_64"/>
+		<install_executables os="linux" ws="gtk" arch="x86"/>
+		<install_executables os="linux" ws="gtk" arch="x86_64"/>
+		<install_executables os="macosx" ws="cocoa" arch="x86_64"/>
+		 -->
+	</target>
+
+	<target name="linux_unpack_eclipse" unless="is_win">
+	</target>
+	
+	<target name="windows_unpack_eclipse" if="is_win">
+		<unzip dest="${basedir}/../buildRoot"
+			src="${basedir}/../packages/${eclipse_win32_x86_64_zip}"/>
+	</target>
+	
 	<target name="mk_dvkit">
-		<ant antfile="${basedir}/mk_dvkit.xml" target="mk_dvkit"/>
 	</target>
 	
 </project>

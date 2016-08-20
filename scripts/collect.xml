@@ -1,19 +1,60 @@
 <project name="collect">
+	<property environment="env"/>
 	
 	<property name="packages_dir" value="${basedir}/../packages"/>
 	<property name="force" value="false"/>
 	
 	<property file="${basedir}/packages.properties"/>
-	<property name="eclipse_release" value="${mirror_ftp}/eclipse/downloads/drops4/S-4.3RC4-201306052000"/>
+
+	<!-- Use the host Eclipse -->
+	<property name="eclipse.home" location="${env.ECLIPSE_HOME}"/>
+	<condition property="eclipsec" 
+		value="${eclipse.home}/eclipsec" 
+		else="${eclipse.home}/eclipse">
+		<os family="windows"/>
+	</condition>
+	
+	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
+		<classpath path="${basedir}/xmltask.jar"/>
+	</taskdef>
+
+	<macrodef name="mirrorUpdate">
+		<attribute name="source"/>
+		<attribute name="dest"/>
+		
+		<sequential>
+			<exec executable="${eclipsec}" failonerror="true">
+				<arg value="-nosplash"/>
+				<arg value="--launcher.suppressErrors"/>
+				<arg value="-application"/>
+				<arg value="org.eclipse.equinox.p2.artifact.repository.mirrorApplication"/>
+				<arg value="-source"/>
+				<arg value="@{source}"/>
+				<arg value="-destination"/>
+				<arg value="file://@{dest}"/>
+			</exec>
+			<exec executable="${eclipsec}" failonerror="true">
+				<arg value="-nosplash"/>
+				<arg value="--launcher.suppressErrors"/>
+				<arg value="-application"/>
+				<arg value="org.eclipse.equinox.p2.metadata.repository.mirrorApplication"/>
+				<arg value="-source"/>
+				<arg value="@{source}"/>
+				<arg value="-destination"/>
+				<arg value="file://@{dest}"/>
+			</exec>
+		</sequential>
+	</macrodef>
 	
 	<!-- - - - - - - - - - - - - - - - - - 
           target: name                      
          - - - - - - - - - - - - - - - - - -->
     <target name="collect" 
     	depends="init,collect_eclipse,collect_cdt,collect_wst,
-    	collect_emf,collect_dltk,collect_zest,collect_vrapper,
-    	collect_sveditor,collect_elt,collect_shelled,
-    	collect_linuxtools,collect_wixtools">
+    	collect_emf,collect_dltk,collect_zest,collect_gef4,collect_vrapper,
+    	collect_sveditor,collect_shelled,
+    	collect_linuxtools,collect_epic,
+    	collect_pydev,collect_egit">
             
     </target>
 	
@@ -25,7 +66,7 @@
 	<target name="collect_eclipse" 
 		depends="collect_eclipse_linux,collect_eclipse_linux_x86_64,
 		collect_eclipse_win32,collect_eclipse_win32_x86_64,
-		collect_eclipse_deltapack,collect_jdt"/>
+		collect_eclipse_platform,collect_jdt"/>
 	
 	<condition property="fetch.eclipse.linux">
 		<and>
@@ -47,7 +88,9 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="${eclipse_release}/${eclipse_linux_tgz}"/>
 		</exec>
 	</target>	
@@ -70,7 +113,9 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="${eclipse_release}/${eclipse_linux_x86_64_tgz}"/>
 		</exec>
 	</target>
@@ -96,6 +141,8 @@
 			failonerror="true"
 			dir="${packages_dir}">
 			<arg value="-nv"/>
+			<!--
+			-->
 			<arg value="${eclipse_release}/${eclipse_win32_zip}"/>
 		</exec>
 	</target>	
@@ -108,8 +155,10 @@
 				</not>
 				<equals arg1="${force}" arg2="true"/>
 			</or>
+			<!--
 			<os name="windows"/>
 			<os arch="amd64"/>
+			  -->
 		</and>
 	</condition>
 	
@@ -118,28 +167,32 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="${eclipse_release}/${eclipse_win32_x86_64_zip}"/>
 		</exec>
 	</target>
 	
 	<!-- Eclipse Delta Pack -->
-	<condition property="fetch.eclipse.deltapack">
+	<condition property="fetch.eclipse.platform">
 		<or>
 			<not>
-				<available file="${packages_dir}/${eclipse_delta_pack_zip}"/>
+				<available file="${packages_dir}/${eclipse_platform_zip}"/>
 			</not>
 			<equals arg1="${force}" arg2="true"/>
 		</or>
 	</condition>
 	
-	<target name="collect_eclipse_deltapack" if="${fetch.eclipse.deltapack}">
-		<delete file="${packages_dir}/${eclipse_delta_pack_zip}"/>
+	<target name="collect_eclipse_platform" if="${fetch.eclipse.platform}">
+		<delete file="${packages_dir}/${eclipse_platform_zip}"/>
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
-			<arg value="${eclipse_release}/${eclipse_delta_pack_zip}"/>
+			  -->
+			<arg value="${eclipse_release}/${eclipse_platform_zip}"/>
 		</exec>
 	</target>
 
@@ -158,7 +211,9 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="${mirror_ftp}/${jdt_release}/${jdt_zip}"/>
 		</exec>
 	</target>
@@ -178,7 +233,9 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="${mirror_ftp}/${cdt_release}/${cdt_zip}"/>
 		</exec>
 	</target>
@@ -198,7 +255,9 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="${mirror_ftp}/${wst_release}/${wst_zip}"/>
 		</exec>
 	</target>
@@ -217,7 +276,9 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="${mirror_ftp}/${emf_release}/${emf_zip}"/>
 		</exec>
 	</target>
@@ -237,7 +298,9 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="${mirror_ftp}/${dltk_release}/${dltk_zip}"/>
 		</exec>
 	</target>
@@ -256,11 +319,34 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="${mirror_ftp}/${zest_release}/${zest_zip}"/>
 		</exec>
 	</target>
 
+	<!-- GEF Zest+Draw2d -->
+	<condition property="fetch.gef4">
+		<or>
+			<not>
+				<available file="${packages_dir}/${gef4_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+		
+	<target name="collect_gef4" if="${fetch.gef4}">
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<!--
+			<arg value="-nv"/>
+			  -->
+			<arg value="${mirror_ftp}/${gef4_release}/${gef4_zip}"/>
+		</exec>
+	</target>
+		
 	<!-- Vrapper -->
 	<condition property="fetch.vrapper">
 		<or>
@@ -276,7 +362,9 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="-O"/>
 			<arg value="${vrapper_zip}"/>
 			<arg value="${vrapper_release}"/>
@@ -298,7 +386,9 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="-O"/>
 			<arg value="${sveditor_zip}"/>
 			<arg value="${sveditor_release}"/>
@@ -320,7 +410,10 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<arg value="--no-check-certificate"/>
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="-O"/>
 			<arg value="${elt_zip}"/>
 			<arg value="${elt_release}"/>
@@ -342,7 +435,9 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="-O"/>
 			<arg value="${shelled_zip}"/>
 			<arg value="${shelled_release}"/>
@@ -364,7 +459,9 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="-O"/>
 			<arg value="${linuxtools_zip}"/>
 			<arg value="${mirror_ftp}/${linuxtools_release}"/>
@@ -386,7 +483,9 @@
 		<exec executable="wget"
 			failonerror="true"
 			dir="${packages_dir}">
+			<!--
 			<arg value="-nv"/>
+			  -->
 			<arg value="-O"/>
 			<arg value="${wixtools_zip}"/>
 			<arg value="${wixtools_release}"/>
@@ -402,4 +501,84 @@
 	</target>
 	  -->
 	
+	<condition property="fetch.epic">
+		<or>
+			<not>
+				<available file="${packages_dir}/${epic_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<target name="collect_epic" if="fetch.epic">
+		<delete file="${packages_dir}/${epic_zip}"/>
+		<mkdir dir="${packages_dir}/epic"/>
+		<mirrorUpdate source="${epic_updates}" dest="${packages_dir}/epic"/>
+		<unzip src="${packages_dir}/epic/artifacts.jar"
+			dest="${packages_dir}/epic"/>
+		<delete file="${packages_dir}/epic/artifacts.jar"/>
+		<xmltask source="${packages_dir}/epic/artifacts.xml"
+			dest="${packages_dir}/epic/artifacts.xml">
+			<remove path="//repositoryProperties"/>
+		</xmltask>
+		<zip destfile="${packages_dir}/${epic_zip}"
+			basedir="${packages_dir}/epic"
+			includes="**/*"/>
+		<delete dir="${packages_dir}/epic"/>
+	</target>
+
+	<condition property="fetch.pydev">
+		<or>
+			<not>
+				<available file="${packages_dir}/${pydev_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+
+	<target name="collect_pydev" if="fetch.pydev">
+		<delete file="${packages_dir}/${pydev_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<arg value="--no-check-certificate"/>
+			<!--
+			<arg value="-nv"/>
+			  -->
+			<arg value="-O"/>
+			<arg value="${pydev_zip}"/>
+			<arg value="${pydev_release}"/>
+		</exec>
+<!--
+		<mkdir dir="${packages_dir}/pydev"/>
+		<mirrorUpdate source="${pydev_updates}" dest="${packages_dir}/pydev"/>
+		<zip destfile="${packages_dir}/${pydev_zip}"
+			basedir="${packages_dir}/pydev"
+			includes="**/*"/>
+		<delete dir="${packages_dir}/pydev"/>
+  -->
+	</target>
+
+	<condition property="fetch.egit">
+		<or>
+			<not>
+				<available file="${packages_dir}/${egit_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<target name="collect_egit" if="${fetch.egit}">
+		<delete file="${packages_dir}/${egit_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<!--
+			<arg value="-nv"/>
+			  -->
+			<arg value="-O"/>
+			<arg value="${egit_zip}"/>
+			<arg value="${egit_release}/${egit_zip}"/>
+		</exec>
+	</target>
 </project>

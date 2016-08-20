@@ -45,5 +45,15 @@
          </property>
       </product>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="net.sf.dvkit.product.DVKitPerspectiveFactory"
+            fixed="false"
+            icon="window_img_16_16.gif"
+            id="net.sf.dvkit.product.DVKitPerspective"
+            name="DVKit">
+      </perspective>
+   </extension>
 
 </plugin>

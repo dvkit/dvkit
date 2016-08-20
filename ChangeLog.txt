@@ -1,4 +1,54 @@
+-- 1.3.0 Release --
 
+- #(update) - Update to the latest package versions
+
+- #(remove) - ELT (Eclipse Linux Terminal), since the package appears to have disappeared
+
+------------------------------------------------------------------------------
+-- 1.2.0 Release --
+
+- #(enh) - Add EGit 3.1 feature for Git repository support
+
+- #(enh) - Register update sites for EPIC, SVEditor, Vrapper
+
+- #(update) - Update to Vrapper 0.38.0
+
+- #(update) - Update to SVEditor 1.5.0
+
+- #(enh) - Add a default DVKit perspective that shows console,
+  progress, and tasks views
+
+------------------------------------------------------------------------------
+-- 1.1.0 Release --
+
+- #(enh) Add E.P.I.C for editing PERL files
+
+- #(enh) Add PyDev 2.7.5 for editing Python files
+
+- #(enh) Add support for OSX
+
+- #(update) Update to SVEditor 1.4.0
+
+- #(update) Update to Eclipse (core) 4.3.1
+
+- #(update) Update to CDT 8.2.0
+
+- #(update) Update to Vrapper 0.34.1
+
+- #(update) Update to Webtools 3.5.1
+
+- #(update) Update to DLTK 5.0
+
+
+------------------------------------------------------------------------------
+-- 1.0.1 Release --
+
+- #(enh)  Add Mylyn Wikitools plugin
+
+- #(nobug) Correct a Java-version dependency that could cause DVKit to 
+  appear to be 'unbranded' when used with an older JRE
+
+------------------------------------------------------------------------------
 -- 1.0.0 Release --
 
 - Initial release of DVKit. Included packages are:

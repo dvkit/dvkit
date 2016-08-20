@@ -19,39 +19,24 @@ done
 
 . ./packages.properties
 
-rm -rf ../buildRoot
-mkdir ../buildRoot
-
+plat=`uname`
 arch=`uname -m`
 pwd=`pwd`
 
-cd ../buildRoot
 
-if test $arch = "x86_64"; then
-  tar xvzf ../packages/${eclipse_linux_x86_64_tgz}
+if test "$plat" = "MINGW32_NT-6.1" || 
+   test "$plat" = "CYGWIN_NT-6.1"; then
+  eclipse=eclipsec
 else
-  tar xvzf ../packages/${eclipse_linux_tgz}
+  eclipse=eclipse
 fi
 
-mkdir deltapack
-cd deltapack
-
-unzip -o ../../packages/${eclipse_delta_pack_zip}
-
-cd $pwd
-
-export ECLIPSE_HOME=`cd ../buildRoot/eclipse ; pwd`
-
-../buildRoot/eclipse/eclipse \
+${ECLIPSE_HOME}/$eclipse \
     -nosplash -application org.eclipse.ant.core.antRunner \
     --launcher.suppressErrors \
     -buildfile build.xml      \
     -data ../buildRoot/ws     \
-    -verbose                  \
     $extra_defs build_dvkit
 
-
-#    -Dos=linux -Dws=gtk -Darch=$arch $extra_defs build_dvkit
-
-
+exit $?
 

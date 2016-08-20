@@ -1,8 +1,9 @@
 <project default="mk_msi">
+	
 	<condition
 		property="wix"
-		value="c:/Program Files (x86)/WiX Toolset v3.7"
-		else="c:/Program Files/WiX Toolset v3.7">
+		value="c:/Program Files (x86)/WiX Toolset v3.10"
+		else="c:/Program Files/WiX Toolset v3.10">
 		<os arch="amd64"/>
 	</condition>
 	<property file="${script.dir}/../etc/dvkit_info.properties"/>
@@ -20,19 +21,23 @@
 		<os family="windows"/>
 	</condition>
 
+	<!--
 	<condition 
 		property="candle"
-		value="${wixtools}/candle.exe"
+		value="candle.exe"
 		else="${script.dir}/wix_wrappers/candle">
 		<os family="windows"/>
 	</condition>
 
 	<condition 
 		property="light"
-		value="${wixtools}/light.exe"
+		value="light.exe"
 		else="${script.dir}/wix_wrappers/light">
 		<os family="windows"/>
 	</condition>
+	-->
+	<property name="candle" value="${wix}/bin/candle.exe"/>
+	<property name="light" value="${wix}/bin/light.exe"/>
 
 	<property name="script.dir" value="${basedir}/scripts"/>
 	<property name="etc.dir" value="${basedir}/etc"/>

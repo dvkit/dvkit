@@ -5,25 +5,38 @@ files in a myriad of HVL, software, and script languages. A typical project migh
 at the top level, Makefiles beneath, to control a verification environment composed of SystemVerilog
 and C/C++ code. Meanwhile, tool scripts might be implemented in TCL.
 
+[[Image:main_screenshot.png|Main]]
+
 DVKit provides an Eclipse-based integrated development environment (IDE) with support for 
 editing common files used in a design verification environment. DVKit packages the following 
 Eclipse plugins to provide a easily-installed solution for design verification development:
 
+* SVEditor for Verilog and SystemVerilog development
+* C Development Tools (CDT) for C, C++, and Makefile development
+* Webtools for development of XML and JavaScript
+* Dynamic-Languages Toolkit for TCL-script development
+* ShellEd for development and Bourne and C-Shell scripts
+
+In addition, the following utilities are provided:
+* Vi key bindings (Vrapper)
+* Command-line console (Linux-only)
+
 
 == Installing DVKit ==
-DVKit can be installed by downloading one of the prebuilt packages. Pre-build packages are
-currently provided for:
+DVKit can be installed by downloading one of the prebuilt packages. Pre-built packages are
+currently provided in the following formats for the following operating systems:
 
-* 32-bit Windows installer
+* 32-bit Windows installer 
 * 64-bit Windows installer
-* 32-bit Windows zip file
-* 64-bit Windows zip file
-* 32-bit .deb
-* 64-bit .deb
+* 32-bit Windows (.zip)
+* 64-bit Windows (.zip)
+* 32-bit Linux (.deb)
+* 64-bit Linux (.deb)
 * 32-bit Linux tar.gz
 * 64-bit Linux tar.gz
 
-All packages can be obtained from the Files area on the DVKit Sourceforge project:
+All packages can be obtained from the Files area on the DVKit Sourceforge project: 
+[http://sourceforge.net/projects/dvkit/files Files]
 
 
 

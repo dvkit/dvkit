@@ -1,0 +1,9 @@
+instructions.configure=\
+  org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:0,name:SVEditor Updates,location:http${#58}//sveditor.sourceforge.net/update/,enabled:true);\
+  org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:1,name:SVEditor Updates,location:http${#58}//sveditor.sourceforge.net/update/,enabled:true);\
+  org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:0,name:Vrapper Updates,location:http${#58}//vrapper.sourceforge.net/update-site/stable/,enabled:true);\
+  org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:1,name:Vrapper Updates,location:http${#58}//vrapper.sourceforge.net/update-site/stable/,enabled:true);\
+  org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:0,name:E.P.I.C Updates,location:http${#58}//e-p-i-c.sf.net/updates/,enabled:true);\
+  org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:1,name:E.P.I.C Updates,location:http${#58}//e-p-i-c.sf.net/update/,enabled:true);\
+
+  

@@ -1,4 +1,24 @@
+-- 1.3.0 Release --
 
+- #(update) - Update to the latest package versions
+
+- #(remove) - ELT (Eclipse Linux Terminal), since the package appears to have disappeared
+
+------------------------------------------------------------------------------
+-- 1.2.0 Release --
+
+- #(enh) - Add EGit 3.1 feature for Git repository support
+
+- #(enh) - Register update sites for EPIC, SVEditor, Vrapper
+
+- #(update) - Update to Vrapper 0.38.0
+
+- #(update) - Update to SVEditor 1.5.0
+
+- #(enh) - Add a default DVKit perspective that shows console,
+  progress, and tasks views
+
+------------------------------------------------------------------------------
 -- 1.1.0 Release --
 
 - #(enh) Add E.P.I.C for editing PERL files

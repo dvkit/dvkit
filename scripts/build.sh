@@ -24,7 +24,8 @@ arch=`uname -m`
 pwd=`pwd`
 
 
-if test "$plat" = "MINGW32_NT-6.1"; then
+if test "$plat" = "MINGW32_NT-6.1" || 
+   test "$plat" = "CYGWIN_NT-6.1"; then
   eclipse=eclipsec
 else
   eclipse=eclipse
@@ -37,39 +38,5 @@ ${ECLIPSE_HOME}/$eclipse \
     -data ../buildRoot/ws     \
     $extra_defs build_dvkit
 
-exit 0
-
-cd ../buildRoot
-
-if test "$plat" = "MINGW32_NT-6.1"; then
-  unzip ../packages/${eclipse_win32_x86_64_zip}
-else
-  if test $arch = "x86_64"; then
-    tar xvzf ../packages/${eclipse_linux_x86_64_tgz}
-  else
-    tar xvzf ../packages/${eclipse_linux_tgz}
-  fi
-fi
-
-
-mkdir deltapack
-cd deltapack
-
-unzip -o ../../packages/${eclipse_delta_pack_zip}
-
-cd $pwd
-
-export ECLIPSE_HOME=`cd ../buildRoot/eclipse ; pwd`
-
-../buildRoot/eclipse/eclipse \
-    -nosplash -application org.eclipse.ant.core.antRunner \
-    --launcher.suppressErrors \
-    -buildfile build.xml      \
-    -data ../buildRoot/ws     \
-    $extra_defs build_dvkit
-
-
-#    -Dos=linux -Dws=gtk -Darch=$arch $extra_defs build_dvkit
-
-
+exit $?
 

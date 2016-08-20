@@ -43,15 +43,17 @@
                name="startupForegroundColor"
                value="000000">
          </property>
-         <property
-               name="aboutImage"
-               value="product_lg.gif">
-         </property>
-         <property
-               name="aboutText"
-               value="DVKit Design Verification IDE">
-         </property>
       </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="net.sf.dvkit.product.DVKitPerspectiveFactory"
+            fixed="false"
+            icon="window_img_16_16.gif"
+            id="net.sf.dvkit.product.DVKitPerspective"
+            name="DVKit">
+      </perspective>
    </extension>
 
 </plugin>

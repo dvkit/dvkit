@@ -163,6 +163,13 @@
 				<include name="${gef4_zip}"/>
 			</fileset>
 		</unzip>
+
+		<mkdir dir="${buildRoot}/tm"/>
+		<unzip dest="${buildRoot}/tm">
+			<fileset dir="${basedir}/../packages">
+				<include name="${tm_terminal_zip}"/>
+			</fileset>
+		</unzip>
 		
 		<mkdir dir="${buildRoot}/cdt"/>
 		<unzip dest="${buildRoot}/cdt">
@@ -170,6 +177,7 @@
 				<include name="${cdt_zip}"/>
 			</fileset>
 		</unzip>
+
 		
 		<mkdir dir="${buildRoot}/jdt"/>
 		<unzip dest="${buildRoot}/jdt">
@@ -224,15 +232,6 @@
 			</fileset>
 		</unzip>
 	
-		<!--
-		<mkdir dir="${buildRoot}/elt"/>
-		<unzip dest="${buildRoot}/elt">
-			<fileset dir="${basedir}/../packages">
-				<include name="${elt_zip}"/>
-			</fileset>
-		</unzip>
-		-->
-				
 		<mkdir dir="${buildRoot}/linuxtools"/>
 		<unzip dest="${buildRoot}/linuxtools">
 			<fileset dir="${basedir}/../packages">
@@ -420,10 +419,21 @@
 		<install installIU="org.eclipse.launchbar.feature.group"
 			tag="launchbar"
 			repository="${eclipse_repo}"/>
+
+		<install installIU="org.eclipse.tm.terminal.control.feature.feature.group"
+			tag="AddTMTerminalControl"
+			repository="file://${basedir}/../buildRoot/tm"/>
 				
 		<install installIU="org.eclipse.cdt.feature.group"
 			tag="AddCDT"
 			repository="file://${basedir}/../buildRoot/cdt"/>
+
+		<install installIU="org.eclipse.tm.terminal.connector.ssh.feature.feature.group,
+			org.eclipse.tm.terminal.connector.local.feature.feature.group,
+			org.eclipse.tm.terminal.view.feature.feature.group,
+			org.eclipse.tm.terminal.feature.feature.group"
+			tag="AddTMTerminal"
+			repository="file://${basedir}/../buildRoot/tm"/>
 	
 		<!-- JDT is required by the JavaScript editor -->
 		<install installIU="org.eclipse.jdt.feature.group"
@@ -453,10 +463,10 @@
 			tag="AddTCL"
 			repository="file://${basedir}/../buildRoot/dltk"/>
 
-		<!-- Temp:
 		<install installIU="org.epic.feature.main.feature.group"
 			tag="AddEPIC"
 			repository="file://${basedir}/../buildRoot/epic"/>
+		<!-- Temp:
 			-->
 
 		<install installIU="org.python.pydev.feature.feature.group"
@@ -482,13 +492,7 @@
 		<install installIU="net.sf.sveditor.feature.group"
 			tag="AddSVEditor"
 			repository="file://${basedir}/../buildRoot/sveditor"/>
-		<!-- Temp:
-		 -->
 
-		<!-- Temp:
-		<antcall target="install_elt"/>
-		  -->
-				
 				<!--
 		<install installIU="org.eclipse.linuxtools.cdt.libhover.feature.feature.group,org.eclipse.linuxtools.man.feature.group"
 			tag="AddLinuxTools"
@@ -514,13 +518,6 @@
 		<echo message="END install_addins: c_os=${c_os} c_ws=${c_ws} c_arch=${c_arch}"/>
 	</target>
 	
-	<!-- Currently, ELT is not supported on Windows -->
-	<target name="install_elt" unless="c_is_win">
-		<install installIU="com.google.eclipse.elt.feature.group"
-			tag="AddELT"
-			repository="file://${basedir}/../buildRoot/elt"/>
-	</target>
-
 	<target name="tar_unix_unix" if="c_is_unix_unix">
 		<exec executable="chmod" dir="${buildResult}/dvkit-${dvkit_version}">
 			<arg value="+x"/>

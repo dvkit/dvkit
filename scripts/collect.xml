@@ -50,7 +50,7 @@
           target: name                      
          - - - - - - - - - - - - - - - - - -->
     <target name="collect" 
-    	depends="init,collect_eclipse,collect_cdt,collect_wst,
+    	depends="init,collect_eclipse,collect_tm_terminal,collect_cdt,collect_wst,
     	collect_emf,collect_dltk,collect_zest,collect_gef4,collect_vrapper,
     	collect_sveditor,collect_shelled,
     	collect_linuxtools,collect_epic,
@@ -215,6 +215,28 @@
 			<arg value="-nv"/>
 			  -->
 			<arg value="${mirror_ftp}/${jdt_release}/${jdt_zip}"/>
+		</exec>
+	</target>
+
+	<!-- TM Terminal -->
+	<condition property="fetch.tm.terminal">
+		<or>
+			<not>
+				<available file="${packages_dir}/${tm_terminal_zip}"/>
+			</not>
+			<equals arg1="${force}" arg2="true"/>
+		</or>
+	</condition>
+	
+	<target name="collect_tm_terminal" if="${fetch.tm.terminal}">
+		<delete file="${packages_dir}/${tm_terminal_zip}"/>
+		<exec executable="wget"
+			failonerror="true"
+			dir="${packages_dir}">
+			<!--
+			<arg value="-nv"/>
+			  -->
+			<arg value="${mirror_ftp}/${tm_terminal_release}/${tm_terminal_zip}"/>
 		</exec>
 	</target>
 				
@@ -392,31 +414,6 @@
 			<arg value="-O"/>
 			<arg value="${sveditor_zip}"/>
 			<arg value="${sveditor_release}"/>
-		</exec>
-	</target>
-
-	<!-- ELT -->
-	<condition property="fetch.elt">
-		<or>
-			<not>
-				<available file="${packages_dir}/${elt_zip}"/>
-			</not>
-			<equals arg1="${force}" arg2="true"/>
-		</or>
-	</condition>
-	
-	<target name="collect_elt" if="${fetch.elt}">
-		<delete file="${packages_dir}/${elt_zip}"/>
-		<exec executable="wget"
-			failonerror="true"
-			dir="${packages_dir}">
-			<arg value="--no-check-certificate"/>
-			<!--
-			<arg value="-nv"/>
-			  -->
-			<arg value="-O"/>
-			<arg value="${elt_zip}"/>
-			<arg value="${elt_release}"/>
 		</exec>
 	</target>
 

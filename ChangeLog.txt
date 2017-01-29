@@ -1,3 +1,21 @@
+-- 1.4.0 Release --
+
+- #(update) - Update to Eclipse 4.6.2
+
+- #(update) - Update to CDT 9.2.0
+
+- #(update) - Update to SVEditor 1.9.4
+
+- #(update) - Update to EGit 4.6
+
+- #(new) - Add TM Terminal 4.2, which provides a terminal view
+
+- #(nobug)  - Re-enable EPIC (PERL) support, which was removed in 1.3.x
+
+-- 1.3.1 Release --
+
+- #(nobug) - Correct splash screen issues with Eclipse Neon
+
 -- 1.3.0 Release --
 
 - #(update) - Update to the latest package versions

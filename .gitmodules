@@ -1,0 +1,4 @@
+[submodule "scripts/eclipsescripts"]
+	path = scripts/eclipsescripts
+	url = https://github.com/mballance/eclipsescripts.git
+	branch = master

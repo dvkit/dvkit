@@ -1,6 +1,4 @@
 
-buildResult/
-buildRoot/
-installerTmp/
-packages/
+./packages/
+./build/
 

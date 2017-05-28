@@ -5,7 +5,17 @@ PRODUCT_SRCDIR := $(DVKIT_DIR)/dvkit
 # PRODUCT_FEATURE_DIR := $(PSSTOOLS_DIR)/psstools/features/net.sf.psstools.pssc.feature
 PRODUCT_VERSION := 1.5.0
 # PRODUCT_PRE_BUILD_TARGETS := $(PRODUCT)_pssc_mw2e
-PRODUCT_PKGS += jdt cdt
+PRODUCT_PKGS += \
+	cdt \
+	dltk \
+	emf_rt \
+	gef \
+	jdt \
+	pydev \
+	tm_terminal \
+	vrapper \
+	wst \
+
 
 include $(ECLIPSESCRIPTS_DIR)/mkfiles/eclipseproduct.mk
 

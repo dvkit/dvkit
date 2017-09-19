@@ -1,4 +1,0 @@
-#!/bin/sh
-
-wine ${WIXTOOLS}/candle.exe ${1+"$@"}
-

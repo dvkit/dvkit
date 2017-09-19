@@ -1,6 +1,35 @@
 
 -- 1.5.0 Release --
 
+? #() - Change heap settings (1024)
+
+- #(nobug) - Correct Java version check. Previously, DVKit would fail to 
+  launch with an unituitive error message if Java8 was not installed
+  
+- #(update) - Update to Eclipse 4.6.3
+
+- #(update) - Update to CDT 9.2.2
+
+- #(update) - Update to WST 3.8.2
+
+- #(update) - Update to DLTK 5.6
+
+- #(update) - Update to vrapper 0.72.0
+
+- #(update) - Update to EGit 4.7
+
+- #(update) - Update to Mylyn Wikitools 3.23.0
+
+- #(update) - Update to SVEditor 2.0.4
+
+- #(update) - Update to PyDev 5.7.0
+
+- #(enh) - Add Scala IDE plug-in (http://scala-ide.org)
+
+- #(enh) - Add initial support for Mac OSX
+
+
+
 ------------------------------------------------------------------------------
 -- 1.4.0 Release --
 

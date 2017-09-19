@@ -4,7 +4,7 @@ ifneq (1,$(RULES))
 
 PYDEV_VERSION = 5.7.0
 PYDEV_ZIP = PyDev%20$(PYDEV_VERSION)
-PYDEV_URL = https://sourceforge.net/projects/pydev/files/pydev/PyDev%20$(PYDEV_VERSION/PyDev%20$(PYDEV_VERSION)/PyDev%20$(PYDEV_VERSION).zip
+PYDEV_URL = https://sourceforge.net/projects/pydev/files/pydev/PyDev%20$(PYDEV_VERSION)/PyDev%20$(PYDEV_VERSION).zip/download
 PYDEV_DIR = $(BUILD_TOOLS_DIR)/pydev
 PYDEV_REPOS = $(call ECLIPSE_REPOSITORY_URL,$(PYDEV_DIR))
 

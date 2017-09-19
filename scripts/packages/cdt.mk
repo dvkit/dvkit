@@ -12,9 +12,6 @@ CDT_FEATURES := org.eclipse.cdt.feature.group
 
 else
 
-cdt.install : $(BUILD_TOOLS_DIR)/cdt.unpack \
-	gef.install launchbar.install tm_terminal_ctrl.install
-
 $(BUILD_TOOLS_DIR)/cdt.unpack : $(PACKAGES_DIR)/$(CDT_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(CDT_DIR)
@@ -22,7 +19,8 @@ $(BUILD_TOOLS_DIR)/cdt.unpack : $(PACKAGES_DIR)/$(CDT_ZIP)
 	$(Q)cd $(CDT_DIR) ; unzip $^
 	$(Q)touch $@
 	
-cdt.install : $(BUILD_TOOLS_DIR)/cdt.unpack
+cdt.install : $(BUILD_TOOLS_DIR)/cdt.unpack \
+	gef.install launchbar.install tm_terminal_ctrl.install
 	$(Q)$(call ECLIPSE_INSTALL_IU, $(CDT_FEATURES), $(CDT_REPOS), \
 		CDT, $(PARENT_DIR_A))
 	$(Q)touch $@

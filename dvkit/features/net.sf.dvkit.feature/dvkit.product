@@ -10,11 +10,15 @@
       <programArgs>--launcher.XXMaxPermSize
 256m
 --launcher.defaultAction
-openFile
---launcher.appendVmargs</programArgs>
-      <vmArgs>-Xms40m
--Xmx512m</vmArgs>
-      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+openFile 
+--launcher.appendVmargs
+      </programArgs>
+      <vmArgs>-Dosgi.requiredJavaVersion=1.8
+-Xms40m
+-Xmx1536m
+      </vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
    </launcherArgs>
 
    <windowImages i16="/net.sf.dvkit.product/window_img_16_16.gif" i32="/net.sf.dvkit.product/window_img_32_32.gif" i48="/net.sf.dvkit.product/window_img_48_48.gif" i64="/net.sf.dvkit.product/window_img_64_64.gif" i128="/net.sf.dvkit.product/window_img_128_128.gif"/>
@@ -26,7 +30,6 @@ openFile
       startupForegroundColor="000000" />
    <launcher name="dvkit">
       <linux icon="/net.sf.dvkit.feature/window_img_48_48.xpm"/>
-      <solaris/>
       <win useIco="false">
          <bmp
             winSmallHigh="/net.sf.dvkit.feature/window_img_16_16.bmp"
@@ -41,7 +44,7 @@ openFile
 
    <vm>
       <linux include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JRE-1.1</linux>
-      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</windows>
+      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
 
    <license>

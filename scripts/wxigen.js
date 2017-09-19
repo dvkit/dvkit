@@ -63,6 +63,7 @@ function getDirTree(root, xml, indent, baseFolder, componentIds)
         xml = xml + space + "<Directory Id=\"" + directoryId +"\"";
 //        xml = xml + " Name=\"" + fdrFolder.ShortName.toUpperCase() + "\"";
 //        xml = xml + " LongName=\"" + fdrFolder.Name + "\">\r\n";
+//	xml = xml + " Win64=\"$(var.Win64)\" ";
         xml = xml + " Name=\"" + fdrFolder.Name + "\">\r\n";
     }
 

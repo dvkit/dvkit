@@ -8,7 +8,7 @@ VRAPPER_URL = https://sourceforge.net/projects/vrapper/files/vrapper/$(VRAPPER_V
 VRAPPER_DIR = $(BUILD_TOOLS_DIR)/vrapper
 VRAPPER_REPOS = $(call ECLIPSE_REPOSITORY_URL,$(VRAPPER_DIR))
 
-VRAPPER_FEATURES := net.sourceforge.vrapper.feature.group,net.sourceforge.vrapper.eclipse.cdt.feature.feature.group,net.sourceforge.vrapper.eclipse.jdt.feature.feature.group,net.sourceforge.vrapper.eclipse.pydev.feature.feature.group,net.sourceforge.vrapper.plugin.argtextobj.feature.group,net.sourceforge.vrapper.plugin.ipmotion.feature.group, net.sourceforge.vrapper.plugin.splitEditor.feature.group,net.sourceforge.vrapper.plugin.surround.feature.group
+VRAPPER_FEATURES := net.sourceforge.vrapper.feature.group,net.sourceforge.vrapper.eclipse.cdt.feature.feature.group,net.sourceforge.vrapper.eclipse.jdt.feature.feature.group,net.sourceforge.vrapper.eclipse.pydev.feature.feature.group,net.sourceforge.vrapper.plugin.argtextobj.feature.group,net.sourceforge.vrapper.plugin.ipmotion.feature.group,net.sourceforge.vrapper.plugin.splitEditor.feature.group,net.sourceforge.vrapper.plugin.surround.feature.group
 
 else
 

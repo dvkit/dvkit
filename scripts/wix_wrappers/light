@@ -1,4 +1,0 @@
-#!/bin/sh
-
-wine ${WIXTOOLS}/light.exe ${1+"$@"}
-

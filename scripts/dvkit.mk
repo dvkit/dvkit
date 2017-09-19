@@ -8,10 +8,14 @@ PRODUCT_VERSION := 1.5.0
 PRODUCT_PKGS += \
 	cdt \
 	dltk \
+	egit \
 	emf_rt \
+	epic \
 	gef \
 	jdt \
 	pydev \
+	scala_ide \
+	sveditor \
 	tm_terminal \
 	vrapper \
 	wst \

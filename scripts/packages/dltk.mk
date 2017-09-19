@@ -3,16 +3,18 @@
 ifneq (1,$(RULES))
 
 DLTK_VERSION = 5.6
-DLTK_ZIP = dltk-R-$(DLTK_VERSION)-401608300412.zip
+DLTK_ZIP = dltk-R-$(DLTK_VERSION)-201608300412.zip
 DLTK_URL = $(ECLIPSE_MIRROR_URL)/technology/dltk/downloads/drops/R$(DLTK_VERSION)/R-$(DLTK_VERSION)-201608300412/$(DLTK_ZIP)
 DLTK_DIR = $(BUILD_TOOLS_DIR)/dltk
-DLTK_REPOS = $(call ECLIPSE_REPOSITORY_URL,$(DLTK_DIR)),$(call ECLIPSE_REPOSITORY_URL,$(ECLIPSE_PLATFORM_DIR))
+# DLTK requires emf.databinding
+DLTK_REPOS = $(call ECLIPSE_REPOSITORY_URL,$(DLTK_DIR)),$(call ECLIPSE_REPOSITORY_URL,$(ECLIPSE_PLATFORM_DIR)),$(call ECLIPSE_REPOSITORY_URL,$(EMF_DIR))
 
 DLTK_FEATURES := org.eclipse.dltk.tcl.feature.group
 
 else
 
 dltk.install : $(BUILD_TOOLS_DIR)/dltk.unpack \
+	$(BUILD_TOOLS_DIR)/emf.unpack \
 	gef.install launchbar.install tm_terminal_ctrl.install
 
 $(BUILD_TOOLS_DIR)/dltk.unpack : $(PACKAGES_DIR)/$(DLTK_ZIP)

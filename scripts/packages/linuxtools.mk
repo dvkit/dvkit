@@ -1,4 +1,5 @@
 
+# Note: not currently installed
 
 ifneq (1,$(RULES))
 

@@ -4,7 +4,7 @@ ifneq (1,$(RULES))
 
 SCALA_IDE_VERSION = 212
 SCALA_IDE_ZIP = scala_ide_update.zip
-SCALA_IDE_URL = http://download.scala-ide.org/sdk/lithium/e46/scala212/stable/update-site.zip
+SCALA_IDE_URL = http://download.scala-ide.org/sdk/lithium/e47/scala212/stable/update-site.zip
 SCALA_IDE_DIR = $(BUILD_TOOLS_DIR)/scala_ide
 SCALA_IDE_REPOS = $(call ECLIPSE_REPOSITORY_URL,$(SCALA_IDE_DIR)/base),$(call ECLIPSE_REPOSITORY_URL,$(ECLIPSE_PLATFORM_DIR))
 

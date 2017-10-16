@@ -7,6 +7,22 @@
 
 - #(enh) - Bundle JRE in with all releases
 
+- #(update) - Update Eclipse to Oxygen (4.7.1a)
+
+- #(update) - Update to CDT 9.3.1
+
+- #(update) - Update to DLTK 5.8
+
+- #(update) - Update to EGit 4.9
+
+- #(update) - Update to PyDev 6.0
+
+- #(update) - Update Scala IDE to 4.7.0
+
+- #(update) - Update Webtools to 3.9.1a
+
+- #(update) - Eclipse Modeling Framework to 2.13.0
+
 ------------------------------------------------------------------------------
 -- 1.5.0 Release --
 

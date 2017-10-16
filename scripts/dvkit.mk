@@ -19,6 +19,7 @@ PRODUCT_PKGS += \
 	tm_terminal \
 	vrapper \
 	wst \
+	jre
 
 
 include $(ECLIPSESCRIPTS_DIR)/mkfiles/eclipseproduct.mk

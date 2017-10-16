@@ -1,7 +1,16 @@
 
+-- 1.6.0 Release --
+
+- #(enh) - Enhancements and corrections to the OSX release
+
+- #() - Remove support for 32-bit packages
+
+- #(enh) - Bundle JRE in with all releases
+
+------------------------------------------------------------------------------
 -- 1.5.0 Release --
 
-? #() - Change heap settings (1024)
+- #() - Change heap settings (1024) for Scala
 
 - #(nobug) - Correct Java version check. Previously, DVKit would fail to 
   launch with an unituitive error message if Java8 was not installed

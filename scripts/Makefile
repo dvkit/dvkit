@@ -42,7 +42,7 @@ DVKIT_SCRIPTS_DIR_A := $(DVKIT_SCRIPTS_DIR)
 endif
 endif
 
-$(DVKIT_RESULT_DIR)/dvkit-$(dvkit_PRODUCT_VERSION)-64.msi : $(DVKIT_RESULT_DIR)/dvkit.product \
+$(DVKIT_RESULT_DIR)/dvkit-$(dvkit_PRODUCT_VERSION)-64.msi : dvkit \
 	$(BUILD_DIR)/tools/wix.unpack
 	$(Q)cd $(DVKIT_RESULT_DIR)/win32.x86_64 ; \
 		cscript $(DVKIT_SCRIPTS_DIR_A)/wxigen.js \
@@ -62,7 +62,7 @@ $(DVKIT_RESULT_DIR)/dvkit-$(dvkit_PRODUCT_VERSION)-64.msi : $(DVKIT_RESULT_DIR)/
 	$(Q)mv $(DVKIT_RESULT_DIR)/dvkit.msi $@
 	echo "Build $*"
 
-$(DVKIT_RESULT_DIR)/dvkit-$(dvkit_PRODUCT_VERSION)-x86.msi : $(DVKIT_RESULT_DIR)/dvkit.product \
+$(DVKIT_RESULT_DIR)/dvkit-$(dvkit_PRODUCT_VERSION)-x86.msi : dvkit \
 	$(BUILD_DIR)/tools/wix.unpack
 	$(Q)cd $(DVKIT_RESULT_DIR)/win32.x86 ; \
 		cscript $(DVKIT_SCRIPTS_DIR_A)/wxigen.js \

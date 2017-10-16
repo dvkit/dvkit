@@ -3,7 +3,7 @@
 
 - #(enh) - Enhancements and corrections to the OSX release
 
-- #() - Remove support for 32-bit packages
+- #(change) - Remove support for 32-bit packages. 
 
 - #(enh) - Bundle JRE in with all releases
 
@@ -21,7 +21,7 @@
 
 - #(update) - Update Webtools to 3.9.1a
 
-- #(update) - Eclipse Modeling Framework to 2.13.0
+- #(update) - Update Eclipse Modeling Framework to 2.13.0
 
 ------------------------------------------------------------------------------
 -- 1.5.0 Release --

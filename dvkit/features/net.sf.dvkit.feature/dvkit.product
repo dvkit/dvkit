@@ -14,8 +14,9 @@ openFile
 --launcher.appendVmargs
       </programArgs>
       <vmArgs>-Dosgi.requiredJavaVersion=1.8
--Xms40m
--Xmx1536m
+-Xms1024m
+-Xmx3500m
+-Xss2M
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>

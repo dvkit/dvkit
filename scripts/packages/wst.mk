@@ -4,11 +4,11 @@ ifneq (1,$(RULES))
 
 WST_VERSION = 3.9.1a
 WST_ZIP = wtp-repo-R-$(WST_VERSION)-20171004113814.zip
-WST_URL = $(ECLIPSE_MIRROR_URL)/webtools/downloads/drops/R$(WST_VERSION)/R-$(WST_VERSION)-20171003180432/$(WST_ZIP)
+WST_URL = $(ECLIPSE_MIRROR_URL)/webtools/downloads/drops/R$(WST_VERSION)/R-$(WST_VERSION)-20171004113814/$(WST_ZIP)
 WST_DIR = $(BUILD_TOOLS_DIR)/wst
 
 WST_FEATURES := org.eclipse.wst.xml_ui.feature.feature.group,org.eclipse.wst.jsdt.feature.feature.group
-WST_REPOS = $(call ECLIPSE_REPOSITORY_URL,$(WST_DIR)),$(call ECLIPSE_REPOSITORY_URL,$(EQUINOX_DIR))
+WST_REPOS = $(call ECLIPSE_REPOSITORY_URL,$(WST_DIR)),$(call ECLIPSE_REPOSITORY_URL,$(ORBIT_DIR)),$(call ECLIPSE_REPOSITORY_URL,$(EQUINOX_DIR))
 
 else
 

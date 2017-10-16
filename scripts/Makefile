@@ -21,7 +21,7 @@ DVKIT_RESULT_DIR := $(BUILD_DIR)/dvkit/result
 
 include $(DVKIT_SCRIPTS_DIR)/eclipsescripts/mkfiles/eclipsescripts.mk
 
-dvkit_PRODUCT_VERSION := 1.5.0
+dvkit_PRODUCT_VERSION := 1.6.0
 
 dvkit-installers : \
 	$(DVKIT_RESULT_DIR)/dvkit-$(dvkit_PRODUCT_VERSION)-64.msi \

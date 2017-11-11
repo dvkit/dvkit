@@ -1,4 +1,17 @@
 
+-- 1.7.0 Release --
+
+- #(enh) - Add yEdit plugin for editing YAML files
+
+- #(enh) - Add new DLTK (dynamic-language toolkit) shell editor to replace old ShellEd
+
+- #(enh) - Add new DLTK Ruby editor
+
+- #(enh) - Add PDE plugin (removes some warnings)
+
+- #(update) - Update to SVEditor 2.0.6
+
+------------------------------------------------------------------------------
 -- 1.6.0 Release --
 
 - #(enh) - Enhancements and corrections to the OSX release

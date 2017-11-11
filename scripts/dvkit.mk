@@ -3,12 +3,13 @@ PRODUCT := dvkit
 PRODUCT_FILE := /net.sf.dvkit.feature/dvkit.product
 PRODUCT_SRCDIR := $(DVKIT_DIR)/dvkit
 # PRODUCT_FEATURE_DIR := $(PSSTOOLS_DIR)/psstools/features/net.sf.psstools.pssc.feature
-PRODUCT_VERSION := 1.6.0
+PRODUCT_VERSION := 1.7.0
 # PRODUCT_PRE_BUILD_TARGETS := $(PRODUCT)_pssc_mw2e
 PRODUCT_PKGS += \
 	cdt \
 	dltk \
 	egit \
+	pde \
 	emf_rt \
 	epic \
 	gef \
@@ -19,6 +20,7 @@ PRODUCT_PKGS += \
 	tm_terminal \
 	vrapper \
 	wst \
+	yedit \
 	jre
 
 

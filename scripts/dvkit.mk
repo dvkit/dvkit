@@ -3,7 +3,7 @@ PRODUCT := dvkit
 PRODUCT_FILE := /net.sf.dvkit.feature/dvkit.product
 PRODUCT_SRCDIR := $(DVKIT_DIR)/dvkit
 # PRODUCT_FEATURE_DIR := $(PSSTOOLS_DIR)/psstools/features/net.sf.psstools.pssc.feature
-PRODUCT_VERSION := 1.7.0
+PRODUCT_VERSION := 1.8.0
 # PRODUCT_PRE_BUILD_TARGETS := $(PRODUCT)_pssc_mw2e
 PRODUCT_PKGS += \
 	cdt \
@@ -14,6 +14,7 @@ PRODUCT_PKGS += \
 	epic \
 	gef \
 	jdt \
+	psstools \
 	pydev \
 	scala_ide \
 	sveditor \

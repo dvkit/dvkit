@@ -1,4 +1,11 @@
 
+-- 1.8.0 Release --
+
+- #(enh) - Add PSSTools, basic editors for Accellera Portable Stimulus Standard
+
+- #(update) - Update to SVEditor 2.0.7
+
+------------------------------------------------------------------------------
 -- 1.7.0 Release --
 
 - #(enh) - Add yEdit plugin for editing YAML files

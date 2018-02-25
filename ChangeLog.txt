@@ -1,4 +1,25 @@
 
+-- 1.9.0 Release --
+
+- #(update) - Update to Eclipse Oxygen.2 (4.7.2)
+
+- #(update) - Update to PSDE 0.0.3
+
+- #(update) - Update to SVEditor 2.1.1
+
+- #(enh)    - Add Mylyn editor for markup languages, including Markdown
+
+- #(update) - Update to CDT 9.4.2
+
+- #(update) - Update to Eclipse PERL Integration 0.7.5
+
+- #(update) - Update to PyDev 6.2.0
+
+- #(update) - Update to TM Terminal 4.3
+
+- #(update) - Update to Webtools 3.9.2
+
+
 -- 1.8.0 Release --
 
 - #(enh) - Add PSSTools, basic editors for Accellera Portable Stimulus Standard

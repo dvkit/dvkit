@@ -2,7 +2,7 @@
 
 ifneq (1,$(RULES))
 
-TM_TERMINAL_VERSION = 4.2
+TM_TERMINAL_VERSION = 4.3
 TM_TERMINAL_ZIP = org.eclipse.tm.terminal.repo.zip
 TM_TERMINAL_URL = $(ECLIPSE_MIRROR_URL)/tm/terminal/updates/$(TM_TERMINAL_VERSION)/GA/$(TM_TERMINAL_ZIP)
 TM_TERMINAL_DIR = $(BUILD_TOOLS_DIR)/tm_terminal

@@ -20,7 +20,7 @@ $(BUILD_TOOLS_DIR)/linuxtools.unpack : $(PACKAGES_DIR)/$(LINUXTOOLS_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(LINUXTOOLS_DIR)
 	$(Q)mkdir -p $(LINUXTOOLS_DIR)
-	$(Q)cd $(LINUXTOOLS_DIR) ; unzip $^
+	$(Q)cd $(LINUXTOOLS_DIR) ; $(UNZIP) $^
 	$(Q)touch $@
 	
 linuxtools.install : $(BUILD_TOOLS_DIR)/linuxtools.unpack

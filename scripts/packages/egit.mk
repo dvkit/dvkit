@@ -16,7 +16,7 @@ $(BUILD_TOOLS_DIR)/egit.unpack : $(PACKAGES_DIR)/$(EGIT_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(EGIT_DIR)
 	$(Q)mkdir -p $(EGIT_DIR)
-	$(Q)cd $(EGIT_DIR) ; unzip $^
+	$(Q)cd $(EGIT_DIR) ; $(UNZIP) $^
 	$(Q)touch $@
 	
 egit.install : $(BUILD_TOOLS_DIR)/egit.unpack \

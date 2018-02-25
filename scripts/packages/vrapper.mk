@@ -16,7 +16,7 @@ $(BUILD_TOOLS_DIR)/vrapper.unpack : $(PACKAGES_DIR)/$(VRAPPER_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(VRAPPER_DIR)
 	$(Q)mkdir -p $(VRAPPER_DIR)
-	$(Q)cd $(VRAPPER_DIR) ; unzip $^
+	$(Q)cd $(VRAPPER_DIR) ; $(UNZIP) $^
 	$(Q)touch $@
 	
 vrapper.install : $(BUILD_TOOLS_DIR)/vrapper.unpack jdt.install cdt.install

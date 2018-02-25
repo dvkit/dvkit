@@ -16,7 +16,7 @@ $(BUILD_TOOLS_DIR)/mylyn.unpack : $(PACKAGES_DIR)/$(MYLYN_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(MYLYN_DIR)
 	$(Q)mkdir -p $(MYLYN_DIR)
-	$(Q)cd $(MYLYN_DIR) ; unzip $^
+	$(Q)cd $(MYLYN_DIR) ; $(UNZIP) $^
 	$(Q)touch $@
 	
 mylyn.install : $(BUILD_TOOLS_DIR)/mylyn.unpack \

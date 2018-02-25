@@ -18,7 +18,7 @@ $(BUILD_TOOLS_DIR)/scala_ide.unpack : $(PACKAGES_DIR)/$(SCALA_IDE_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(SCALA_IDE_DIR)
 	$(Q)mkdir -p $(SCALA_IDE_DIR)
-	$(Q)cd $(SCALA_IDE_DIR) ; unzip $^
+	$(Q)cd $(SCALA_IDE_DIR) ; $(UNZIP) $^
 	$(Q)touch $@
 	
 scala_ide.install : $(BUILD_TOOLS_DIR)/scala_ide.unpack \

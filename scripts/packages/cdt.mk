@@ -17,7 +17,7 @@ $(BUILD_TOOLS_DIR)/cdt.unpack : $(PACKAGES_DIR)/$(CDT_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(CDT_DIR)
 	$(Q)mkdir -p $(CDT_DIR)
-	$(Q)cd $(CDT_DIR) ; unzip $^
+	$(Q)cd $(CDT_DIR) ; $(UNZIP) $^
 	$(Q)touch $@
 	
 cdt.install : $(BUILD_TOOLS_DIR)/cdt.unpack \

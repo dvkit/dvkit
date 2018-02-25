@@ -22,7 +22,7 @@ $(BUILD_TOOLS_DIR)/dltk.unpack : $(PACKAGES_DIR)/$(DLTK_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(DLTK_DIR)
 	$(Q)mkdir -p $(DLTK_DIR)
-	$(Q)cd $(DLTK_DIR) ; unzip $^
+	$(Q)cd $(DLTK_DIR) ; $(UNZIP) $^
 	$(Q)touch $@
 	
 dltk.install : $(BUILD_TOOLS_DIR)/dltk.unpack jdt.install

@@ -16,7 +16,7 @@ $(BUILD_TOOLS_DIR)/psde.unpack : $(PACKAGES_DIR)/$(PSDE_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(PSDE_DIR)
 	$(Q)mkdir -p $(PSDE_DIR)
-	$(Q)cd $(PSDE_DIR) ; unzip $^
+	$(Q)cd $(PSDE_DIR) ; $(UNZIP) $^
 	$(Q)touch $@
 	
 psde.install : $(BUILD_TOOLS_DIR)/psde.unpack xtext.runtime.install

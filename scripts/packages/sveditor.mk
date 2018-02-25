@@ -16,7 +16,7 @@ $(BUILD_TOOLS_DIR)/sveditor.unpack : $(PACKAGES_DIR)/$(SVEDITOR_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(SVEDITOR_DIR)
 	$(Q)mkdir -p $(SVEDITOR_DIR)
-	$(Q)cd $(SVEDITOR_DIR) ; unzip $^
+	$(Q)cd $(SVEDITOR_DIR) ; $(UNZIP) $^
 	$(Q)touch $@
 	
 sveditor.install : $(BUILD_TOOLS_DIR)/sveditor.unpack gef.install 

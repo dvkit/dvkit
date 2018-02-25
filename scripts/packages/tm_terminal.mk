@@ -23,7 +23,7 @@ $(BUILD_TOOLS_DIR)/tm_terminal.unpack : $(PACKAGES_DIR)/$(TM_TERMINAL_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(TM_TERMINAL_DIR)
 	$(Q)mkdir -p $(TM_TERMINAL_DIR)
-	$(Q)cd $(TM_TERMINAL_DIR) ; unzip $^
+	$(Q)cd $(TM_TERMINAL_DIR) ; $(UNZIP) $^
 	$(Q)touch $@
 	
 tm_terminal_ctrl.install : $(TM_TERMINAL_DEPS) 

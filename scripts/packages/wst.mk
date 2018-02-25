@@ -18,7 +18,7 @@ $(BUILD_TOOLS_DIR)/wst.unpack : $(PACKAGES_DIR)/$(WST_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(WST_DIR)
 	$(Q)mkdir -p $(WST_DIR)
-	$(Q)cd $(WST_DIR) ; unzip $^
+	$(Q)cd $(WST_DIR) ; $(UNZIP) $^
 	$(Q)touch $@
 	
 wst.install : $(BUILD_TOOLS_DIR)/wst.unpack

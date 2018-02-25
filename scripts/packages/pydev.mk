@@ -16,7 +16,7 @@ $(BUILD_TOOLS_DIR)/pydev.unpack : $(PACKAGES_DIR)/$(PYDEV_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(PYDEV_DIR)
 	$(Q)mkdir -p $(PYDEV_DIR)
-	$(Q)cd $(PYDEV_DIR) ; unzip $^
+	$(Q)cd $(PYDEV_DIR) ; $(UNZIP) $^
 	$(Q)touch $@
 	
 pydev.install : $(BUILD_TOOLS_DIR)/pydev.unpack 

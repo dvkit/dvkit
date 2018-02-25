@@ -17,7 +17,7 @@ $(BUILD_TOOLS_DIR)/pde.unpack : $(PACKAGES_DIR)/$(ECLIPSE_PDE_ZIP)
 	$(Q)if test ! -d `dirname $@`; then mkdir -p `dirname $@`; fi
 	$(Q)rm -rf $(ECLIPSE_PDE_DIR)
 	$(Q)mkdir -p $(ECLIPSE_PDE_DIR)
-	$(Q)cd $(ECLIPSE_PDE_DIR) ; unzip $^
+	$(Q)cd $(ECLIPSE_PDE_DIR) ; $(UNZIP) $^
 	$(Q)touch $@
 	
 pde.install : $(BUILD_TOOLS_DIR)/pde.unpack $(BUILD_TOOLS_DIR)/eclipse_platform.unpack jdt.install

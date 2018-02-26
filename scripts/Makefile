@@ -21,11 +21,10 @@ DVKIT_RESULT_DIR := $(BUILD_DIR)/dvkit/result
 
 include $(DVKIT_SCRIPTS_DIR)/eclipsescripts/mkfiles/eclipsescripts.mk
 
-dvkit_PRODUCT_VERSION := 1.8.0
+dvkit_PRODUCT_VERSION := 1.9.0
 
 dvkit-installers : \
-	$(DVKIT_RESULT_DIR)/dvkit-$(dvkit_PRODUCT_VERSION)-64.msi \
-	$(DVKIT_RESULT_DIR)/dvkit-$(dvkit_PRODUCT_VERSION)-x86.msi
+	$(DVKIT_RESULT_DIR)/dvkit-$(dvkit_PRODUCT_VERSION)-64.msi 
 	
 DVKIT_RESULT_DIR = $(BUILD_DIR)/dvkit/result
 
@@ -55,26 +54,6 @@ $(DVKIT_RESULT_DIR)/dvkit-$(dvkit_PRODUCT_VERSION)-64.msi : dvkit \
 			-dProgramFilesFolder=ProgramFiles64Folder \
 			-darch=x64 \
 			-dWin64=yes \
-			-ext WixUIExtension
-	$(Q)cd $(DVKIT_RESULT_DIR) ; \
-		$(WIX_DIR)/light dvkit.wixobj -ext WixUIExtension
-	$(Q)cd $(DVKIT_RESULT_DIR) ; rm -rf dvkit.wixobj dvkit.wixpdb
-	$(Q)mv $(DVKIT_RESULT_DIR)/dvkit.msi $@
-	echo "Build $*"
-
-$(DVKIT_RESULT_DIR)/dvkit-$(dvkit_PRODUCT_VERSION)-x86.msi : dvkit \
-	$(BUILD_DIR)/tools/wix.unpack
-	$(Q)cd $(DVKIT_RESULT_DIR)/win32.x86 ; \
-		cscript $(DVKIT_SCRIPTS_DIR_A)/wxigen.js \
-			$(DVKIT_RESULT_DIR_A)/win32.x86/dvkit-$(dvkit_PRODUCT_VERSION) dvkit_files.wxi
-	$(Q)cd $(DVKIT_RESULT_DIR) ; \
-		$(WIX_DIR)/candle $(DVKIT_SCRIPTS_DIR_A)/dvkit.wxs \
-			-dversion=$(dvkit_PRODUCT_VERSION) \
-			-dbasedir=$(DVKIT_RESULT_DIR_A)/win32.x86 \
-			-detc.dir=$(call NATIVE_PATH,$(DVKIT_ETC_DIR)) \
-			-dProgramFilesFolder=ProgramFilesFolder \
-			-darch=x86 \
-			-dWin64=no \
 			-ext WixUIExtension
 	$(Q)cd $(DVKIT_RESULT_DIR) ; \
 		$(WIX_DIR)/light dvkit.wixobj -ext WixUIExtension

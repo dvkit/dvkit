@@ -2,7 +2,7 @@
 PRODUCT := dvkit
 PRODUCT_FILE := /net.sf.dvkit.feature/dvkit.product
 PRODUCT_SRCDIR := $(DVKIT_DIR)/dvkit
-PRODUCT_VERSION := 1.9.0
+PRODUCT_VERSION := 1.9.1
 # PRODUCT_PRE_BUILD_TARGETS := $(PRODUCT)_pssc_mw2e
 PRODUCT_PKGS += \
 	cdt \

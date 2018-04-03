@@ -10,7 +10,7 @@ YEDIT_FEATURES := org.dadacoalition.yedit.feature.feature.group
 else
 
 yedit.install : 
-	$(Q)$(call ECLIPSE_INSTALL_IU, $(EPIC_FEATURES), $(YEDIT_REPOS), \
+	$(Q)$(call ECLIPSE_INSTALL_IU, $(YEDIT_FEATURES), $(YEDIT_REPOS), \
 		yEdit, $(PARENT_DIR_A))
 	$(Q)touch $@
 	

@@ -8,21 +8,22 @@ PRODUCT_PKGS += \
 	cdt \
 	dltk \
 	egit \
-	pde \
 	emf_rt \
 	epic \
 	gef \
-	jdt \
 	mylyn \
 	psde \
 	pydev \
-	scala_ide \
 	sveditor \
 	tm_terminal \
 	vrapper \
 	wst \
 	yedit \
 	jre
+
+#	scala_ide \
+#	jdt \
+#	pde \
 
 
 include $(ECLIPSESCRIPTS_DIR)/mkfiles/eclipseproduct.mk

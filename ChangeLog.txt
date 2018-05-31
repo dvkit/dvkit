@@ -1,5 +1,20 @@
 
 ------------------------------------------------------------------------------
+-- 1.9.2 Release --
+
+- #(update) - Update to SVEditor 2.1.4
+
+- #(change) - Remove Scala IDE due to performance issues
+
+- #(change) - Remove Java Development Tools due to performance issues
+
+- #(change) - Remove Eclipse Plugin Development Environment due to performance issues
+
+- #(update) - Update to Eclipse Oxygen.3a (4.7.3a)
+
+- #(update) - Update to CDT 9.4.3
+
+------------------------------------------------------------------------------
 -- 1.9.1 Release --
 
 - #(enh) - Add Mylyn Wikitext editors

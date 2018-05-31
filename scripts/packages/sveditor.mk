@@ -2,7 +2,7 @@
 
 ifneq (1,$(RULES))
 
-SVEDITOR_VERSION = 2.1.1
+SVEDITOR_VERSION = 2.1.4
 SVEDITOR_ZIP = sveditor-$(SVEDITOR_VERSION).jar
 SVEDITOR_URL = https://sourceforge.net/projects/sveditor/files/sveditor/$(SVEDITOR_VERSION)/$(SVEDITOR_ZIP)/download
 SVEDITOR_DIR = $(BUILD_TOOLS_DIR)/sveditor

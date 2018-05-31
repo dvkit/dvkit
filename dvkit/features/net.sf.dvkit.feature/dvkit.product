@@ -15,7 +15,7 @@ openFile
       </programArgs>
       <vmArgs>-Dosgi.requiredJavaVersion=1.8
 -Xms1024m
--Xmx3500m
+-Xmx1024m
 -Xss2M
 --illegal-access=permit
 --add-modules=ALL-SYSTEM

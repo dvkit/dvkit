@@ -2,7 +2,7 @@
 
 ifneq (1,$(RULES))
 
-PSDE_VERSION = 0.0.5
+PSDE_VERSION = 0.0.6
 PSDE_ZIP = psde-$(PSDE_VERSION).jar
 PSDE_URL = https://dl.bintray.com/mballance/psstools/psde/$(PSDE_VERSION)/release/$(PSDE_ZIP)
 PSDE_DIR = $(BUILD_TOOLS_DIR)/psde

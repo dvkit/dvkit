@@ -17,8 +17,6 @@ openFile
 -Xms1024m
 -Xmx1024m
 -Xss2M
---illegal-access=permit
---add-modules=ALL-SYSTEM
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>

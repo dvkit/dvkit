@@ -14,7 +14,7 @@
 
 - #(update) - Update to CDT 9.4.3
 
-- #(update) - Update to PSDE 0.0.6, with support for Accellera PSS 1.0
+- #(update) - Update to PSDE 0.0.7, with support for Accellera PSS 1.0
 
 ------------------------------------------------------------------------------
 -- 1.9.1 Release --

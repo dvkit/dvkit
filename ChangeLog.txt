@@ -1,5 +1,24 @@
 
 ------------------------------------------------------------------------------
+-- 2.0.0 Release --
+
+- #(update) - Update to Eclipse Photon
+
+- #(update) - Xtext 2.14.0
+
+- #(update) - CDT 9.5.2
+
+- #(update) - DLTK 5.9
+
+- #(update) - EGit 5.0.2
+
+- #(update) - Mylyn 3.25.0
+
+- #(update) - PyDev 6.4.4
+
+- #(update) - Web Tools (WST) 3.10.0
+
+------------------------------------------------------------------------------
 -- 1.9.2 Release --
 
 - #(update) - Update to SVEditor 2.1.4

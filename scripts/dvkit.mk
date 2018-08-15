@@ -1,8 +1,12 @@
 
+DVKIT_SCRIPTS_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+
+include $(DVKIT_SCRIPTS_DIR)/../etc/dvkit_info.properties
+
 PRODUCT := dvkit
 PRODUCT_FILE := /net.sf.dvkit.feature/dvkit.product
 PRODUCT_SRCDIR := $(DVKIT_DIR)/dvkit
-PRODUCT_VERSION := 1.9.2
+PRODUCT_VERSION := $(dvkit_version)
 # PRODUCT_PRE_BUILD_TARGETS := $(PRODUCT)_pssc_mw2e
 PRODUCT_PKGS += \
 	cdt \
